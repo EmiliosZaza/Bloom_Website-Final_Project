@@ -16,7 +16,6 @@ python manage.py runserver
 |----------|------------|------------|
 | admin    | admin1234  | Superuser  |
 | testuser | user1234   | Regular    |
-| emilios  | emilios1234| Regular    |
 
 ## Key URLs
 
