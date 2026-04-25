@@ -8,7 +8,7 @@ from catalogue.models import Product
 
 
 class CartItem(models.Model):
-    """A product in a user's active cart"""
+    """A product in a user's active cart — deleted with user"""
     user       = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cart_items')
     product    = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity   = models.PositiveIntegerField(default=1)
@@ -26,7 +26,7 @@ class CartItem(models.Model):
 
 
 class Order(models.Model):
-    """A completed simulated purchase"""
+    """A completed simulated purchase — kept when user is deleted"""
     STATUS_CHOICES = [
         ('pending',   'Pending'),
         ('confirmed', 'Confirmed'),
@@ -34,7 +34,7 @@ class Order(models.Model):
         ('delivered', 'Delivered'),
     ]
 
-    user        = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
+    user        = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='orders')
     status      = models.CharField(max_length=20, choices=STATUS_CHOICES, default='confirmed')
     total       = models.DecimalField(max_digits=10, decimal_places=2)
     created_at  = models.DateTimeField(auto_now_add=True)
@@ -43,7 +43,7 @@ class Order(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f'Order #{self.pk} — {self.user.username}'
+        return f'Order #{self.pk} — {self.user.username if self.user else "Deleted User"}'
 
 
 class OrderItem(models.Model):
@@ -58,4 +58,4 @@ class OrderItem(models.Model):
         return self.price * self.quantity
 
     def __str__(self):
-        return f'{self.product.name} x{self.quantity}'
+        return f'{self.product.name if self.product else "Deleted Product"} x{self.quantity}'
