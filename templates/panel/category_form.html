@@ -1,0 +1,21 @@
+{% extends 'panel/base_panel.html' %}
+{% load static %}
+{% block title %}Admin — {{ action }}{% endblock %}
+{% block meta_description %}Category form{% endblock %}
+{% block meta_keywords %}admin, category{% endblock %}
+{% block panel_content %}
+<div class="panel-header">
+    <h1 class="panel-header_title">{{ action }}</h1>
+    <a href="{% url 'panel:categories' %}" class="btn-ghost">← Back</a>
+</div>
+<div class="panel-form-card">
+    <form method="post" novalidate>{% csrf_token %}
+        <div class="panel-field"><label for="name">Name *</label><input type="text" id="name" name="name" maxlength="80" required /></div>
+        {% if not parent %}<div class="panel-field"><label for="description">Description</label><textarea id="description" name="description" rows="3"></textarea></div>{% endif %}
+        <div class="panel-form-actions">
+            <button type="submit" class="btn-primary">Save</button>
+            <a href="{% url 'panel:categories' %}" class="btn-ghost">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bloom — Page Not Found{% endblock %}
+{% block meta_description %}The page you were looking for could not be found.{% endblock %}
+{% block meta_keywords %}404, not found, bloom{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="error-page">
+
+        <div class="error-page_visual" aria-hidden="true">
+            <img src="{% static 'assets/icons/icon-leaf.png' %}" alt="" class="error-page_leaf error-page_leaf--1" />
+            <img src="{% static 'assets/icons/icon-leaf.png' %}" alt="" class="error-page_leaf error-page_leaf--2" />
+            <img src="{% static 'assets/icons/icon-leaf.png' %}" alt="" class="error-page_leaf error-page_leaf--3" />
+            <span class="error-page_code">404</span>
+        </div>
+
+        <h1 class="error-page_title">This page got lost in the forest</h1>
+        <p class="error-page_sub">The page you were looking for doesn't exist, may have been moved, or the URL was mistyped.</p>
+
+        <div class="error-page_actions">
+            <a href="{% url 'core:home' %}" class="btn-primary">
+                Back to Home
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                     stroke-linecap="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+            </a>
+            <a href="{% url 'shop:support' %}" class="btn-ghost">Support Us</a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

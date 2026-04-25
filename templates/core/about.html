@@ -1,0 +1,327 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bloom — About{% endblock %}
+{% block meta_description %}Bloom began as a small group of friends and has grown into a national reforestation movement. Meet our team and read our story.{% endblock %}
+{% block meta_keywords %}about bloom, non-profit, reforestation, volunteers, mission, history{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style-about.css' %}" />
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/js-about.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+
+    <!-- Heading -->
+    <section class="about-hero" aria-labelledby="aboutTitle">
+        <div class="container">
+            <p class="section-label">Who We Are</p>
+            <h1 class="about-hero_title" id="aboutTitle">
+                Rooted in purpose,<br>
+                <span class="highlight">growing with every tree</span>
+            </h1>
+            <p class="about-hero_lead">
+                Bloom began as a small group of friends with a shared conviction: that ordinary people,
+                working together, can restore the natural world. Since our founding we have grown into
+                a registered non-profit mobilizing thousands of volunteers across the country — and
+                we are just getting started.
+            </p>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="timeline-section" aria-labelledby="timelineTitle">
+        <div class="container">
+            <div class="timeline-section_header">
+                <p class="section-label">Our Journey</p>
+                <h2 class="timeline-section_title" id="timelineTitle">From a small idea to a national movement</h2>
+                <p class="timeline-section_sub">Every milestone below marks a moment that shaped who Bloom is today.</p>
+            </div>
+
+            <div class="timeline" role="list">
+
+                <div class="timeline-year"><span class="timeline-year_label">2015</span></div>
+                <div class="timeline-item" role="listitem">
+                    <div class="timeline-item_left" aria-hidden="true"></div>
+                    <div class="timeline-item_node"></div>
+                    <div class="timeline-item_right">
+                        <div class="timeline-card">
+                            <div class="card-img-area">
+                                <img src="{% static 'assets/founding-2015.jpg' %}" alt="Bloom founders at the first planting day, 2015" onerror="this.style.display='none'" />
+                                <div class="card-img-area_fallback">
+                                    <img src="{% static 'assets/icons/icon-leaf.png' %}" class="placeholder-icon-img" alt="founding" />
+                                    <span class="placeholder-label">founding-2015.jpg</span>
+                                </div>
+                            </div>
+                            <div class="timeline-card_body">
+                                <span class="timeline-card_tag">Founded</span>
+                                <h3 class="timeline-card_title">Bloom is born</h3>
+                                <p class="timeline-card_desc">Four friends plant 30 native oak saplings in a disused field outside Athens. The idea: build a community-led reforestation movement from the ground up, one tree at a time.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-year"><span class="timeline-year_label">2017</span></div>
+                <div class="timeline-item" role="listitem">
+                    <div class="timeline-item_left">
+                        <div class="timeline-card">
+                            <div class="card-img-area">
+                                <img src="{% static 'assets/registered-2017.jpg' %}" alt="Bloom team celebrating charity registration, 2017" onerror="this.style.display='none'" />
+                                <div class="card-img-area_fallback">
+                                    <img src="{% static 'assets/icons/icon-document.png' %}" class="placeholder-icon-img" alt="registered" />
+                                    <span class="placeholder-label">registered-2017.jpg</span>
+                                </div>
+                            </div>
+                            <div class="timeline-card_body">
+                                <span class="timeline-card_tag">Milestone</span>
+                                <h3 class="timeline-card_title">Registered as a non-profit</h3>
+                                <p class="timeline-card_desc">After two years of grassroots activity Bloom receives official charitable status, unlocking grant funding and enabling us to scale our planting operations nationally.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item_node"></div>
+                    <div class="timeline-item_right" aria-hidden="true"></div>
+                </div>
+
+                <div class="timeline-year"><span class="timeline-year_label">2019</span></div>
+                <div class="timeline-item" role="listitem">
+                    <div class="timeline-item_left" aria-hidden="true"></div>
+                    <div class="timeline-item_node"></div>
+                    <div class="timeline-item_right">
+                        <div class="timeline-card">
+                            <div class="card-img-area">
+                                <img src="{% static 'assets/event-2019.jpg' %}" alt="Hundreds of volunteers at the 2019 national planting day" onerror="this.style.display='none'" />
+                                <div class="card-img-area_fallback">
+                                    <img src="{% static 'assets/icons/icon-tree.png' %}" class="placeholder-icon-img" alt="event" />
+                                    <span class="placeholder-label">event-2019.jpg</span>
+                                </div>
+                            </div>
+                            <div class="timeline-card_body">
+                                <span class="timeline-card_tag">Growth</span>
+                                <h3 class="timeline-card_title">First national planting day</h3>
+                                <p class="timeline-card_desc">Over 400 volunteers converge on six sites simultaneously across Greece. In a single weekend Bloom plants more than 10,000 trees — our largest single event to that point.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-year"><span class="timeline-year_label">2021</span></div>
+                <div class="timeline-item" role="listitem">
+                    <div class="timeline-item_left">
+                        <div class="timeline-card">
+                            <div class="card-img-area">
+                                <img src="{% static 'assets/platform-2021.jpg' %}" alt="The Bloom volunteer platform at launch in 2021" onerror="this.style.display='none'" />
+                                <div class="card-img-area_fallback">
+                                    <img src="{% static 'assets/icons/icon-laptop.png' %}" class="placeholder-icon-img" alt="platform" />
+                                    <span class="placeholder-label">platform-2021.jpg</span>
+                                </div>
+                            </div>
+                            <div class="timeline-card_body">
+                                <span class="timeline-card_tag">Technology</span>
+                                <h3 class="timeline-card_title">The platform launches</h3>
+                                <p class="timeline-card_desc">Bloom goes digital — a volunteer coordination platform connects site leaders with contributors for the first time, removing the coordination bottleneck that had slowed growth.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item_node"></div>
+                    <div class="timeline-item_right" aria-hidden="true"></div>
+                </div>
+
+                <div class="timeline-year"><span class="timeline-year_label">2023</span></div>
+                <div class="timeline-item" role="listitem">
+                    <div class="timeline-item_left" aria-hidden="true"></div>
+                    <div class="timeline-item_node"></div>
+                    <div class="timeline-item_right">
+                        <div class="timeline-card">
+                            <div class="card-img-area">
+                                <img src="{% static 'assets/fifty-thousand-2023.jpg' %}" alt="Aerial view of a restored woodland site, 2023" onerror="this.style.display='none'" />
+                                <div class="card-img-area_fallback">
+                                    <img src="{% static 'assets/icons/icon-trophy.png' %}" class="placeholder-icon-img" alt="milestone" />
+                                    <span class="placeholder-label">fifty-thousand-2023.jpg</span>
+                                </div>
+                            </div>
+                            <div class="timeline-card_body">
+                                <span class="timeline-card_tag">Milestone</span>
+                                <h3 class="timeline-card_title">50,000 trees planted</h3>
+                                <p class="timeline-card_desc">A landmark moment — Bloom's cumulative planting total crosses 50,000 trees across 10 active restoration sites. Wildfire response becomes a core part of our mission.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-year"><span class="timeline-year_label">2026</span></div>
+                <div class="timeline-item" role="listitem">
+                    <div class="timeline-item_left">
+                        <div class="timeline-card">
+                            <div class="card-img-area">
+                                <img src="{% static 'assets/today-2026.jpg' %}" alt="Bloom volunteers at a current restoration site, 2026" onerror="this.style.display='none'" />
+                                <div class="card-img-area_fallback">
+                                    <img src="{% static 'assets/icons/icon-globe.png' %}" class="placeholder-icon-img" alt="today" />
+                                    <span class="placeholder-label">today-2026.jpg</span>
+                                </div>
+                            </div>
+                            <div class="timeline-card_body">
+                                <span class="timeline-card_tag">Today</span>
+                                <h3 class="timeline-card_title">Building for scale</h3>
+                                <p class="timeline-card_desc">Bloom's e-commerce platform goes live — every purchase plants trees automatically. We are now seeking corporate partners to fund the next phase of restoration across Greece.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item_node"></div>
+                    <div class="timeline-item_right" aria-hidden="true"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Volunteers -->
+    <section class="volunteers-section" aria-labelledby="volunteersTitle">
+        <div class="container">
+            <div class="volunteers-section_header">
+                <p class="section-label">Our People</p>
+                <h2 class="volunteers-section_title" id="volunteersTitle">The people who make it happen</h2>
+            </div>
+
+            <div class="volunteers-grid">
+                {% for vol in volunteers %}
+                <div class="volunteer-card">
+                    <div class="card-img-area">
+                        <img src="{% static vol.image %}" alt="{{ vol.name }}" onerror="this.style.display='none'" />
+                        <div class="card-img-area_fallback"><span class="volunteer-card_initials">{{ vol.initials }}</span></div>
+                    </div>
+                    <div class="volunteer-card_body">
+                        <span class="volunteer-card_role">{{ vol.role }}</span>
+                        <h3 class="volunteer-card_name">{{ vol.name }}</h3>
+                        <blockquote class="volunteer-card_quote">"{{ vol.quote }}"</blockquote>
+                        <div class="volunteer-card_stats">
+                            <span><img src="{% static 'assets/icons/icon-tree.png' %}" class="inline-icon" alt="" /> {{ vol.trees }} trees</span>
+                            <span><img src="{% static 'assets/icons/icon-calendar.png' %}" class="inline-icon" alt="" /> {{ vol.years }} years</span>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="volunteer-card">
+                    <div class="card-img-area">
+                        <img src="{% static 'assets/volunteer-sarah.png' %}" alt="Sarah M." onerror="this.style.display='none'" />
+                        <div class="card-img-area_fallback"><span class="volunteer-card_initials">SM</span></div>
+                    </div>
+                    <div class="volunteer-card_body">
+                        <span class="volunteer-card_role">Site Leader · Athens</span>
+                        <h3 class="volunteer-card_name">Sarah M.</h3>
+                        <blockquote class="volunteer-card_quote">"Every oak I plant is a letter to the future. Bloom gave me the tools to write thousands of them."</blockquote>
+                        <div class="volunteer-card_stats"><span><img src="{% static 'assets/icons/icon-tree.png' %}" class="inline-icon" alt="" /> 847 trees</span> <span><img src="{% static 'assets/icons/icon-calendar.png' %}" class="inline-icon" alt="" /> 4 years</span></div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="volunteer-card volunteer-card--cta">
+                    <div class="volunteer-card_cta-inner">
+                        <span class="volunteer-card_cta-icon"><img src="{% static 'assets/icons/icon-leaf.png' %}" class="cta-icon-img" alt="Join Bloom" /></span>
+                        <h3 class="volunteer-card_cta-title">Could this be you?</h3>
+                        <p class="volunteer-card_cta-desc">No experience needed — just enthusiasm. Join hundreds of people already giving their time to restore our natural landscapes.</p>
+                        <a href="{% url 'shop:support' %}" class="btn-primary volunteer-card_cta-btn">Support Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonial-section" aria-labelledby="testimonialTitle">
+        <div class="container">
+            <div class="testimonial-section_header">
+                <p class="section-label">Voices from the Field</p>
+                <h2 class="testimonial-section_title" id="testimonialTitle">What our community says</h2>
+            </div>
+            <div class="testimonial-carousel" id="testimonialCarousel" aria-live="polite">
+                <div class="testimonial-track" id="testimonialTrack">
+
+                    <div class="testimonial-slide" role="group" aria-label="Testimonial 1 of 5">
+                        <div class="testimonial-card">
+                            <div class="testimonial-card_img">
+                                <img src="{% static 'assets/testimonial-sarah.jpg' %}" alt="Sarah M." onerror="this.style.display='none'" />
+                                <div class="testimonial-card_img-fallback">SM</div>
+                            </div>
+                            <blockquote class="testimonial-card_quote">"I joined Bloom on a gray Sunday morning expecting mud and hard work. I got both — but I also got a community I never want to leave."</blockquote>
+                            <cite class="testimonial-card_cite">
+                                <span class="testimonial-card_name">Sarah M.</span>
+                                <span class="testimonial-card_meta">Site Leader, Athens · 4 years</span>
+                            </cite>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-slide" role="group" aria-label="Testimonial 2 of 5">
+                        <div class="testimonial-card">
+                            <div class="testimonial-card_img">
+                                <img src="{% static 'assets/testimonial-james.jpg' %}" alt="James K." onerror="this.style.display='none'" />
+                                <div class="testimonial-card_img-fallback">JK</div>
+                            </div>
+                            <blockquote class="testimonial-card_quote">"As an ecologist I'm often frustrated by how slowly things move. Bloom is the fastest, most tangible conservation work I've ever been part of."</blockquote>
+                            <cite class="testimonial-card_cite">
+                                <span class="testimonial-card_name">James K.</span>
+                                <span class="testimonial-card_meta">Ecologist, Thessaloniki · 6 years</span>
+                            </cite>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-slide" role="group" aria-label="Testimonial 3 of 5">
+                        <div class="testimonial-card">
+                            <div class="testimonial-card_img">
+                                <img src="{% static 'assets/testimonial-will.jpg' %}" alt="Will S." onerror="this.style.display='none'" />
+                                <div class="testimonial-card_img-fallback">WS</div>
+                            </div>
+                            <blockquote class="testimonial-card_quote">"We brought 22 colleagues for a corporate day. Every single person left energized. We've booked three more dates this year."</blockquote>
+                            <cite class="testimonial-card_cite">
+                                <span class="testimonial-card_name">Will S.</span>
+                                <span class="testimonial-card_meta">CEO, Athens</span>
+                            </cite>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-slide" role="group" aria-label="Testimonial 4 of 5">
+                        <div class="testimonial-card">
+                            <div class="testimonial-card_img">
+                                <img src="{% static 'assets/testimonial-nina.jpg' %}" alt="Nina C." onerror="this.style.display='none'" />
+                                <div class="testimonial-card_img-fallback">NC</div>
+                            </div>
+                            <blockquote class="testimonial-card_quote">"Tending seedlings sounds small, but watching them leave the nursery and become part of a real woodland — there's nothing quite like it."</blockquote>
+                            <cite class="testimonial-card_cite">
+                                <span class="testimonial-card_name">Nina C.</span>
+                                <span class="testimonial-card_meta">Nursery Lead, Lefkada · 5 years</span>
+                            </cite>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-slide" role="group" aria-label="Testimonial 5 of 5">
+                        <div class="testimonial-card">
+                            <div class="testimonial-card_img">
+                                <img src="{% static 'assets/testimonial-tom.jpg' %}" alt="Tom L." onerror="this.style.display='none'" />
+                                <div class="testimonial-card_img-fallback">TL</div>
+                            </div>
+                            <blockquote class="testimonial-card_quote">"Training new volunteers is the most rewarding thing I've done. You see someone arrive nervous and leave with a spade in their hand and a fire in their eyes."</blockquote>
+                            <cite class="testimonial-card_cite">
+                                <span class="testimonial-card_name">Tom L.</span>
+                                <span class="testimonial-card_meta">Trainer, Chios · 2 years</span>
+                            </cite>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button class="testimonial-btn testimonial-btn--prev" id="testimonialPrev" aria-label="Previous testimonial">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="testimonial-btn testimonial-btn--next" id="testimonialNext" aria-label="Next testimonial">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+            </div>
+            <div class="testimonial-dots" id="testimonialDots" role="tablist" aria-label="Testimonial navigation"></div>
+        </div>
+    </section>
+
+{% endblock %}

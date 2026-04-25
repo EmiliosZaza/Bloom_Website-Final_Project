@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bloom — Impact{% endblock %}
+{% block meta_description %}See the measurable difference Bloom volunteers have made since 2015. Track trees planted, CO2 absorbed, and woodland restored.{% endblock %}
+{% block meta_keywords %}impact, trees planted, CO2, woodland, reforestation data, bloom{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style-impact.css' %}" />
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/js-impact.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <!-- Heading -->
+    <div class="impact-hero">
+        <p class="section-label">Our Impact</p>
+        <h1 class="impact-hero_title">Every tree tells a story</h1>
+        <p class="impact-hero_sub">From barren fields to thriving woodlands — see the measurable difference Bloom volunteers have made since 2015.</p>
+    </div>
+
+    <!-- Pass total_trees to JS via data attribute -->
+    <div id="bloomData"
+         data-total-trees="{{ total_trees }}"
+         style="display:none;"
+         aria-hidden="true"></div>
+
+    <!-- MILESTONE TRACKER -->
+    <section class="milestone-section" aria-labelledby="milestoneTitle">
+        <div class="milestone-header">
+            <p class="section-label">The Journey</p>
+            <h2 class="milestone-title" id="milestoneTitle">Road to one million trees</h2>
+            <p class="milestone-sub">Bloom's mission runs to 2030. Every purchase and donation moves the marker forward.</p>
+        </div>
+
+        <div class="milestone-track-wrap">
+            <div class="milestone-labels" aria-hidden="true">
+                <span style="left:1%">0</span>
+                <span style="left:5%">50k</span>
+                <span style="left:10%">100k</span>
+                <span style="left:25%">250k</span>
+                <span style="left:50%">500k</span>
+                <span style="left:100%">1M</span>
+            </div>
+
+            <div class="milestone-track"
+                 role="progressbar"
+                 aria-valuemin="0"
+                 aria-valuemax="1000000"
+                 aria-valuenow="{{ total_trees }}"
+                 aria-label="Progress toward one million trees">
+                <div class="milestone-fill" id="milestoneFill"></div>
+                <div class="milestone-tick" style="left:5%"  aria-hidden="true"><span class="milestone-tick_dot"></span></div>
+                <div class="milestone-tick" style="left:10%" aria-hidden="true"><span class="milestone-tick_dot"></span></div>
+                <div class="milestone-tick" style="left:25%" aria-hidden="true"><span class="milestone-tick_dot"></span></div>
+                <div class="milestone-tick" style="left:50%" aria-hidden="true"><span class="milestone-tick_dot"></span></div>
+                <div class="milestone-marker" id="milestoneMarker" aria-hidden="true">
+                    <div class="milestone-marker_dot"></div>
+                    <div class="milestone-marker_label" id="milestoneLabel">{{ total_trees }} trees</div>
+                </div>
+            </div>
+
+            <div class="milestone-ends">
+                <span>Founded 2015</span>
+                <span>Goal: 2030</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- BEFORE/AFTER SLIDER -->
+    <section class="before-after-section" aria-labelledby="baTitle">
+        <div class="before-after-header">
+            <p class="section-label">Site Restoration</p>
+            <h2 class="before-after-title" id="baTitle">Drag to reveal the transformation</h2>
+            <p class="before-after-sub">Blackwood Common, Bristol — one of Bloom's first restoration sites. Drag the handle or use the toggle below.</p>
+        </div>
+
+        <div class="ba-wrap">
+            <div class="ba-container" id="baContainer" role="img" aria-label="Before and after comparison of Blackwood Common site restoration">
+                <div class="ba-after">
+                    <img src="{% static 'assets/site-after-2026.jpg' %}" alt="Blackwood Common restored woodland, 2026" />
+                    <div class="ba-label ba-label--after">2026 — Restored</div>
+                </div>
+                <div class="ba-before" id="baBefore">
+                    <img src="{% static 'assets/site-before-2015.jpg' %}" alt="Blackwood Common barren field, 2015" />
+                    <div class="ba-label ba-label--before">2015 — Before</div>
+                </div>
+                <div class="ba-handle" id="baHandle" role="slider"
+                     aria-label="Image comparison slider"
+                     aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"
+                     tabindex="0">
+                    <div class="ba-handle_line"></div>
+                    <div class="ba-handle_grip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ba-toggle" role="group" aria-label="Quick view toggle">
+                <button class="ba-toggle_btn" id="baToggleBefore" aria-pressed="false">
+                    <img src="{% static 'assets/icons/icon-alert.png' %}" class="ba-toggle_icon" alt="" aria-hidden="true" />
+                    Barren Site (2015)
+                </button>
+                <button class="ba-toggle_btn ba-toggle_btn--active" id="baToggleAfter" aria-pressed="true">
+                    <img src="{% static 'assets/icons/icon-check.png' %}" class="ba-toggle_icon" alt="" aria-hidden="true" />
+                    Restored Site (2026)
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FLIP CARDS -->
+    <section class="flip-section" aria-labelledby="flipTitle">
+        <div class="flip-header">
+            <p class="section-label">What It Means</p>
+            <h2 class="flip-title" id="flipTitle">Translating trees into impact</h2>
+            <p class="flip-sub">Raw numbers are hard to picture. Here's what Bloom's <span id="flipTreeCount">{{ total_trees }}</span> trees actually mean for the planet.</p>
+        </div>
+
+        <div class="flip-grid">
+
+            <div class="flip-card" tabindex="0" aria-label="CO2 absorption equivalency">
+                <div class="flip-card_front">
+                    <div class="flip-card_icon"><img src="{% static 'assets/icons/icon-leaf.png' %}" alt="CO2" /></div>
+                    <div class="flip-card_value" id="flipCo2">—</div>
+                    <div class="flip-card_label">Tonnes of CO₂ absorbed per year</div>
+                    <span class="flip-card_hint">Hover to learn more</span>
+                </div>
+                <div class="flip-card_back">
+                    <p>A mature Broadleaf tree absorbs roughly <strong>22 kg of CO₂</strong> per year. Bloom's trees collectively offset the annual emissions of thousands of cars.</p>
+                </div>
+            </div>
+
+            <div class="flip-card" tabindex="0" aria-label="Woodland area equivalency">
+                <div class="flip-card_front">
+                    <div class="flip-card_icon"><img src="{% static 'assets/icons/icon-tree.png' %}" alt="woodland" /></div>
+                    <div class="flip-card_value" id="flipSqm">—</div>
+                    <div class="flip-card_label">Square Metres of new woodland</div>
+                    <span class="flip-card_hint">Hover to learn more</span>
+                </div>
+                <div class="flip-card_back">
+                    <p>Planted at a native woodland density of <strong>1,600 trees per hectare</strong>, Bloom's trees cover an area equivalent to hundreds of thousands of square metres.</p>
+                </div>
+            </div>
+
+            <div class="flip-card" tabindex="0" aria-label="Oxygen production equivalency">
+                <div class="flip-card_front">
+                    <div class="flip-card_icon"><img src="{% static 'assets/icons/icon-globe.png' %}" alt="oxygen" /></div>
+                    <div class="flip-card_value" id="flipPeople">—</div>
+                    <div class="flip-card_label">People supplied with oxygen for a year</div>
+                    <span class="flip-card_hint">Hover to learn more</span>
+                </div>
+                <div class="flip-card_back">
+                    <p>One mature tree produces enough oxygen for <strong>2 people per year</strong>. Bloom's growing forest is breathing life back into our natural landscapes.</p>
+                </div>
+            </div>
+
+            <div class="flip-card" tabindex="0" aria-label="Wildlife habitat equivalency">
+                <div class="flip-card_front">
+                    <div class="flip-card_icon"><img src="{% static 'assets/icons/icon-trophy.png' %}" alt="wildlife" /></div>
+                    <div class="flip-card_value" id="flipSpecies">300+</div>
+                    <div class="flip-card_label">Wildlife species now calling our sites home</div>
+                    <span class="flip-card_hint">Hover to learn more</span>
+                </div>
+                <div class="flip-card_back">
+                    <p>Native woodland supports an extraordinary richness of life — from rare beetles in dead wood to nesting birds and foraging bats. Every tree planted is a home built.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div>
+{% endblock %}

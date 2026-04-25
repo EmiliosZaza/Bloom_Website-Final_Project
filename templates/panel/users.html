@@ -1,0 +1,56 @@
+{% extends 'panel/base_panel.html' %}
+{% load static %}
+{% block title %}Admin — Users{% endblock %}
+{% block meta_description %}Manage users{% endblock %}
+{% block meta_keywords %}admin, users{% endblock %}
+{% block panel_content %}
+<div class="panel-header">
+    <h1 class="panel-header_title">Users</h1>
+</div>
+<form method="get" class="panel-search">
+    <input type="text" name="q" value="{{ q }}" placeholder="Search username or email…" maxlength="100" />
+    <button type="submit" class="filter-btn">Search</button>
+    {% if q %}<a href="{% url 'panel:users' %}" class="filter-btn">Clear</a>{% endif %}
+</form>
+<div class="panel-table-wrap">
+    <table class="panel-table">
+        <thead><tr><th>User</th><th>Email</th><th>Name</th><th>Joined</th><th>Role</th><th>Actions</th></tr></thead>
+        <tbody>
+        {% for u in users %}
+        <tr>
+            <td>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    {% if u.profile.avatar %}
+                    <img src="{{ u.profile.avatar.url }}"
+                         alt="{{ u.username }}"
+                         style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--border);flex-shrink:0;" />
+                    {% else %}
+                    <div style="width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;">
+                        {{ u.username|slice:":2"|upper }}
+                    </div>
+                    {% endif %}
+                    <strong>{{ u.username }}</strong>
+                </div>
+            </td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.get_full_name|default:"—" }}</td>
+            <td>{{ u.date_joined|date:"d M Y" }}</td>
+            <td><span class="panel-badge panel-badge--{% if u.is_staff %}staff{% else %}user{% endif %}">{% if u.is_staff %}Staff{% else %}User{% endif %}</span></td>
+            <td><div class="panel-table_actions">
+                {% if u != request.user %}
+                <form method="post" action="{% url 'panel:user_toggle_staff' u.id %}" style="margin:0;">{% csrf_token %}
+                    <button type="submit" class="action-btn edit">{% if u.is_staff %}Remove Staff{% else %}Make Staff{% endif %}</button>
+                </form>
+                <a href="{% url 'panel:user_delete' u.id %}" class="action-btn delete" style="background:rgba(192,57,43,.1);color:#c0392b;">Delete</a>
+                {% else %}
+                <span style="font-size:.75rem;color:var(--text3);">You</span>
+                {% endif %}
+            </div></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" style="color:var(--text3);">No users found.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

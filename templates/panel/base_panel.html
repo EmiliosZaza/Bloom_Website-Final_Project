@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style-admin.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="panel-layout">
+
+    <aside class="panel-sidebar">
+        <div class="panel-sidebar_logo"><span>Admin Panel</span></div>
+        <ul class="panel-nav" role="navigation" aria-label="Admin navigation">
+            <li><a href="{% url 'panel:dashboard' %}" class="panel-nav_link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                <img src="{% static 'assets/icons/icon-globe.png' %}" alt="" /> Dashboard</a></li>
+            <li><div class="panel-nav_divider"></div></li>
+            <li><a href="{% url 'panel:products' %}" class="panel-nav_link {% if 'product' in request.resolver_match.url_name %}active{% endif %}">
+                <img src="{% static 'assets/icons/icon-tasks.png' %}" alt="" /> Products</a></li>
+            <li><a href="{% url 'panel:categories' %}" class="panel-nav_link {% if 'categor' in request.resolver_match.url_name %}active{% endif %}">
+                <img src="{% static 'assets/icons/icon-log.png' %}" alt="" /> Categories</a></li>
+            <li><div class="panel-nav_divider"></div></li>
+            <li><a href="{% url 'panel:users' %}" class="panel-nav_link {% if 'user' in request.resolver_match.url_name %}active{% endif %}">
+                <img src="{% static 'assets/icons/icon-person.png' %}" alt="" /> Users</a></li>
+            <li><div class="panel-nav_divider"></div></li>
+            <li><a href="{% url 'core:home' %}" class="panel-nav_link">
+                <img src="{% static 'assets/icons/icon-leaf.png' %}" alt="" /> Back to Site</a></li>
+        </ul>
+    </aside>
+
+    <div class="panel-main">
+        {% block panel_content %}{% endblock %}
+    </div>
+
+</div>
+{% endblock %}

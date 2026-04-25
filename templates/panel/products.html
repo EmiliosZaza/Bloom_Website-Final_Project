@@ -1,0 +1,41 @@
+{% extends 'panel/base_panel.html' %}
+{% load static %}
+{% block title %}Admin — Products{% endblock %}
+{% block meta_description %}Manage products{% endblock %}
+{% block meta_keywords %}admin, products{% endblock %}
+{% block panel_content %}
+<div class="panel-header">
+    <h1 class="panel-header_title">Products</h1>
+    <div class="panel-header_actions">
+        <a href="{% url 'panel:product_add' %}" class="btn-primary">+ Add Product</a>
+    </div>
+</div>
+<form method="get" class="panel-search">
+    <input type="text" name="q" value="{{ q }}" placeholder="Search products…" maxlength="100" />
+    <button type="submit" class="filter-btn">Search</button>
+    {% if q %}<a href="{% url 'panel:products' %}" class="filter-btn">Clear</a>{% endif %}
+</form>
+<div class="panel-table-wrap">
+    <table class="panel-table">
+        <thead><tr><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+        {% for p in products %}
+        <tr>
+            <td>{% if p.image %}<img src="{{ p.image.url }}" alt="{{ p.name }}" class="panel-table_img" />{% else %}<img src="{% static 'assets/icons/icon-leaf.png' %}" class="panel-table_img" alt="" />{% endif %}</td>
+            <td><strong>{{ p.name }}</strong></td>
+            <td>{{ p.category.name|default:"—" }}</td>
+            <td>${{ p.price }}</td>
+            <td>{{ p.stock }}</td>
+            <td><span class="panel-badge panel-badge--{% if p.is_active %}active{% else %}inactive{% endif %}">{% if p.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+            <td><div class="panel-table_actions">
+                <a href="{% url 'panel:product_edit' p.id %}" class="action-btn edit">Edit</a>
+                <a href="{% url 'panel:product_delete' p.id %}" class="action-btn delete" style="background:rgba(192,57,43,.1);color:#c0392b;">Delete</a>
+            </div></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7" style="color:var(--text3);">No products found.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

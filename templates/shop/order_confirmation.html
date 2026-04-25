@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bloom — Order Confirmed{% endblock %}
+{% block meta_description %}Your Bloom order has been confirmed. Thank you for supporting reforestation.{% endblock %}
+{% block meta_keywords %}order confirmed, bloom shop, purchase{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style-support.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="order-confirmation">
+
+        <!-- Success icon -->
+        <div class="order-confirmation_icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="20 6 9 17 4 12"/>
+            </svg>
+        </div>
+
+        <h1 class="order-confirmation_title">Order Confirmed!</h1>
+        <p class="order-confirmation_sub">
+            Thank you, {{ user.first_name|default:user.username }}. Your order <strong>#{{ order.id }}</strong>
+            has been placed. Since this is a simulated purchase, no payment was processed —
+            but your support goes toward planting real trees.
+        </p>
+
+        <!-- Order summary card -->
+        <div class="order-confirmation_card">
+            <div class="order-confirmation_card-header">
+                <span class="order-confirmation_label">Order Summary</span>
+                <span class="order-confirmation_date">{{ order.created_at|date:"d F Y" }}</span>
+            </div>
+
+            <ul class="order-confirmation_items">
+                {% for item in items %}
+                <li class="order-confirmation_item">
+                    <div class="order-confirmation_item-img">
+                        {% if item.product.image %}
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" />
+                        {% else %}
+                        <img src="{% static 'assets/icons/icon-leaf.png' %}" alt="" />
+                        {% endif %}
+                    </div>
+                    <div class="order-confirmation_item-details">
+                        <span class="order-confirmation_item-name">{{ item.product.name }}</span>
+                        <span class="order-confirmation_item-qty">Qty: {{ item.quantity }}</span>
+                    </div>
+                    <span class="order-confirmation_item-price">${{ item.subtotal }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <div class="order-confirmation_total">
+                <span>Total paid</span>
+                <strong>${{ order.total }}</strong>
+            </div>
+        </div>
+
+        <!-- Trees planted callout -->
+        <div class="order-confirmation_impact">
+            <span class="order-confirmation_impact-icon">🌳</span>
+            <p>Your order will plant <strong>{{ trees }} trees</strong> across our restoration sites in Greece. 100% of profits fund the mission.</p>
+        </div>
+
+        <!-- Actions -->
+        <div class="order-confirmation_actions">
+            <a href="{% url 'accounts:dashboard' %}" class="btn-primary">
+                View Dashboard
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                     stroke-linecap="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+            </a>
+            <a href="{% url 'shop:support' %}#shop" class="btn-ghost">Continue Shopping</a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

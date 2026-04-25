@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bloom — My Profile{% endblock %}
+{% block meta_description %}View and update your Bloom profile information.{% endblock %}
+{% block meta_keywords %}profile, account, settings, bloom{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style-dashboard.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="dashboard-hero">
+        <p class="section-label">My Account</p>
+        <h1 class="dashboard-hero_title">Your Profile</h1>
+        <p class="dashboard-hero_sub">Keep your information up to date.</p>
+    </div>
+
+    <div class="profile-layout">
+
+        <!-- Avatar card -->
+        <div class="profile-avatar-card">
+            <div class="profile-avatar-wrap">
+                {% if profile.avatar %}
+                <img src="{{ profile.avatar.url }}" alt="{{ user.username }}" class="profile-avatar-img" />
+                {% else %}
+                <div class="profile-avatar-placeholder">
+                    {{ user.first_name|first|upper }}{{ user.last_name|first|upper }}
+                </div>
+                {% endif %}
+            </div>
+            <h2 class="profile-name">{{ user.get_full_name|default:user.username }}</h2>
+            <p class="profile-username">@{{ user.username }}</p>
+            <p class="profile-joined">Member since {{ user.date_joined|date:"F Y" }}</p>
+            <a href="{% url 'accounts:dashboard' %}" class="btn-primary profile-dashboard-btn">
+                View Dashboard
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+            </a>
+        </div>
+
+        <!-- Edit form -->
+        <div class="profile-form-card">
+            <h3 class="profile-form-title">Edit Information</h3>
+
+            <form method="post" enctype="multipart/form-data" id="profileForm" novalidate>
+                {% csrf_token %}
+
+                <div class="profile-field">
+                    <label for="first_name">First Name</label>
+                    <input type="text" id="first_name" name="first_name"
+                           value="{{ user.first_name }}"
+                           maxlength="150" placeholder="Your first name" />
+                </div>
+
+                <div class="profile-field">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" id="last_name" name="last_name"
+                           value="{{ user.last_name }}"
+                           maxlength="150" placeholder="Your last name" />
+                </div>
+
+                <div class="profile-field">
+                    <label for="bio">Bio</label>
+                    <textarea id="bio" name="bio" rows="4"
+                              maxlength="300"
+                              placeholder="Tell us a little about yourself...">{{ profile.bio }}</textarea>
+                    <span class="profile-field_hint">Max 300 characters</span>
+                </div>
+
+                <div class="profile-field">
+                    <label for="avatar">Profile Photo</label>
+                    <input type="file" id="avatar" name="avatar" accept="image/*" />
+                </div>
+
+                <div class="profile-field profile-field--readonly">
+                    <label>Username</label>
+                    <div class="profile-readonly-value">{{ user.username }}</div>
+                    <span class="profile-field_hint">Username cannot be changed.</span>
+                </div>
+
+                <div class="profile-field profile-field--readonly">
+                    <label>Email</label>
+                    <div class="profile-readonly-value">{{ user.email }}</div>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    Save Changes
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                </button>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,359 @@
+/*  Impact page respective CSS */
+
+/* Heading */
+.impact-hero { padding: 52px 0 36px; border-bottom: 1px solid var(--border); margin-bottom: 56px; }
+.impact-hero_title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 700; color: var(--text1); margin: 0 0 12px; line-height: 1.2; }
+.impact-hero_sub   { color: var(--text2); font-size: 1rem; font-weight: 300; max-width: 560px; margin: 0; }
+
+/* Shared section header pattern */
+.milestone-header,
+.before-after-header,
+.flip-header { margin-bottom: 32px; }
+
+.milestone-title,
+.before-after-title,
+.flip-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 700; color: var(--text1); margin: 0 0 8px; }
+
+.milestone-sub,
+.before-after-sub,
+.flip-sub { color: var(--text2); font-size: .95rem; max-width: 560px; margin: 0; }
+
+/* MILESTONE TRACKER */
+.milestone-section { margin-bottom: 72px; }
+
+.milestone-track-wrap { position: relative; padding-top: 28px; }
+
+.milestone-labels {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 22px;
+}
+.milestone-labels span {
+    position: absolute;
+    transform: translateX(-50%);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: .68rem;
+    font-weight: 600;
+    color: var(--text3);
+    letter-spacing: .05em;
+    white-space: nowrap;
+}
+.milestone-labels span:first-child { transform: none; }
+.milestone-labels span:last-child  { transform: translateX(-100%); }
+
+.milestone-track {
+    position: relative;
+    width: 100%;
+    height: 14px;
+    background: var(--border2);
+    border-radius: 100px;
+    overflow: visible;
+}
+
+.milestone-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--vibrant-green), var(--green));
+    border-radius: 100px;
+    transition: width 1.2s cubic-bezier(.4,0,.2,1);
+    width: 0;
+}
+
+.milestone-tick {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.milestone-tick_dot {
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    transition: background var(--time), border-color var(--time);
+}
+.milestone-tick_dot--reached {
+    background: var(--vibrant-green);
+    border-color: var(--vibrant-green);
+}
+
+.milestone-marker {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: left 1.2s cubic-bezier(.4,0,.2,1);
+}
+.milestone-marker_pulse { display: none; }
+.milestone-marker_dot {
+    position: relative;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 3px solid var(--card-bg);
+    box-shadow: var(--shadow2);
+    z-index: 1;
+}
+.milestone-marker_label {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text1);
+    color: var(--card-bg);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: .72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+    box-shadow: var(--shadow1);
+}
+.milestone-marker_label::after {
+    content: '';
+    position: absolute;
+    top: 100%; left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--text1);
+}
+
+.milestone-ends {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: .75rem;
+    color: var(--text3);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 500;
+}
+
+/* BEFORE and AFTER SLIDER */
+.before-after-section { margin-bottom: 72px; }
+
+.ba-wrap { display: flex; flex-direction: column; gap: 16px; }
+
+.ba-container {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: col-resize;
+    user-select: none;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow2);
+}
+
+/* After */
+.ba-after {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: none !important;
+}
+.ba-after .card-img-area,
+.ba-after img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 0;
+    border: none;
+}
+
+/* Before */
+.ba-before {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    clip-path: inset(0 50% 0 0);
+}
+.ba-before .card-img-area,
+.ba-before img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 0;
+    border: none;
+}
+
+/* Labels */
+.ba-label {
+    position: absolute;
+    bottom: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    backdrop-filter: blur(6px);
+}
+.ba-label--before {
+    left: 14px;
+    background: rgba(20, 10, 0, .55);
+    color: #f0e8c8;
+}
+.ba-label--after {
+    right: 14px;
+    background: rgba(30, 60, 20, .6);
+    color: #c8f0b0;
+}
+
+/* Handle */
+.ba-handle {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.ba-handle_line {
+    width: 2px;
+    height: 100%;
+    background: #fff;
+    box-shadow: 0 0 6px rgba(0,0,0,.4);
+}
+.ba-handle_grip {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+}
+.ba-handle_grip svg { width: 16px; height: 16px; stroke: var(--text1); }
+
+/* Growth Toggle */
+.ba-toggle {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.ba-toggle_btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 100px;
+    border: 1.5px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text2);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: .82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--time);
+}
+.ba-toggle_btn svg,
+.ba-toggle_btn .ba-toggle_icon { width: 15px; height: 15px; flex-shrink: 0; object-fit: contain; }
+.ba-toggle_btn:hover { border-color: var(--green); color: var(--green); background: var(--greentint); }
+.ba-toggle_btn--active { background: var(--green); color: #fff; border-color: var(--green); }
+.ba-toggle_btn--active:hover { background: var(--green2); border-color: var(--green2); color: #fff; }
+
+@media (max-width: 640px) {
+    .ba-container { height: 260px; }
+}
+
+/* Flip Cards */
+.flip-section { margin-bottom: 72px; }
+
+.flip-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+@media (max-width: 900px) { .flip-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .flip-grid { grid-template-columns: 1fr; } }
+
+.flip-card {
+    height: 220px;
+    perspective: 900px;
+    cursor: pointer;
+}
+.flip-card_front,
+.flip-card_back {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform .55s ease;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.flip-card {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .55s ease;
+}
+.flip-card:hover,
+.flip-card:focus { transform: rotateY(180deg); outline: none; }
+
+.flip-card_front {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    transform: rotateY(0deg);
+}
+.flip-card_back {
+    background: var(--green);
+    border: 1px solid var(--green);
+    color: #fff;
+    transform: rotateY(180deg);
+    justify-content: center;
+}
+.flip-card_back p { font-size: .88rem; line-height: 1.6; margin: 0; }
+.flip-card_back strong { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+
+.flip-card_icon { margin-bottom: 12px; opacity: .7; }
+.flip-card_icon img { width: 32px; height: 32px; object-fit: contain; }
+.flip-card_value {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1;
+    margin-bottom: 8px;
+}
+.flip-card_label { font-size: .8rem; color: var(--text2); line-height: 1.4; }
+.flip-card_hint  { font-size: .68rem; color: var(--text3); margin-top: 10px; font-style: italic; }
+
+/* Dark mode */
+[data-theme="dark"] .milestone-marker_label {
+    background: var(--text2);
+    color: var(--card-bg);
+}
+[data-theme="dark"] .milestone-marker_label::after {
+    border-top-color: var(--text2);
+}
+[data-theme="dark"] .milestone-track {
+    background: var(--border2);
+}
+[data-theme="dark"] .milestone-fill {
+    background: linear-gradient(90deg, #a08858, #f0ead8);
+}

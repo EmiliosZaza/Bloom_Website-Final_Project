@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bloom — Your Cart{% endblock %}
+{% block meta_description %}Review your Bloom cart and proceed to checkout.{% endblock %}
+{% block meta_keywords %}cart, checkout, bloom shop{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style-support.css' %}" />
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/js-cart.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="dashboard-hero">
+        <p class="section-label">Your Cart</p>
+        <h1 class="dashboard-hero_title">Review Your Order</h1>
+    </div>
+
+    {% if items %}
+    <div class="cart-layout">
+
+        <div class="cart-items">
+            {% for item in items %}
+            <div class="cart-item" id="cart-item-{{ item.id }}">
+                <div class="cart-item_img">
+                    {% if item.product.image %}
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" />
+                    {% else %}
+                    <img src="{% static 'assets/icons/cart.png' %}" alt="" />
+                    {% endif %}
+                </div>
+                <div class="cart-item_details">
+                    <h3 class="cart-item_name">{{ item.product.name }}</h3>
+                    <p class="cart-item_category">{{ item.product.category.name }}</p>
+                    <p class="cart-item_price">${{ item.product.price }} × {{ item.quantity }} = <strong>${{ item.subtotal }}</strong></p>
+                </div>
+                <button class="cart-item_remove"
+                        data-item-id="{{ item.id }}"
+                        aria-label="Remove {{ item.product.name }} from cart">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="cart-summary">
+            <div class="cart-summary_card">
+                <h3 class="cart-summary_title">Order Summary</h3>
+                <div class="cart-summary_row">
+                    <span>Subtotal</span>
+                    <span id="cartTotal">${{ total }}</span>
+                </div>
+                <div class="cart-summary_row cart-summary_row--highlight">
+                    <span>Trees planted</span>
+                    <span>🌳 Est. {{ total|floatformat:0 }} trees</span>
+                </div>
+                <p class="cart-summary_note">100% of profits go to reforestation. This is a simulated purchase — no real payment is processed.</p>
+
+                <form method="post" action="{% url 'shop:checkout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-primary cart-checkout-btn">
+                        Complete Order
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                        </svg>
+                    </button>
+                </form>
+
+                <a href="{% url 'shop:support' %}#shop" class="cart-continue-link">← Continue Shopping</a>
+            </div>
+        </div>
+
+    </div>
+
+    {% else %}
+    <div class="cart-empty">
+        <img src="{% static 'assets/icons/cart.png' %}" alt="" style="width:64px;height:64px;opacity:.4;margin-bottom:20px;" />
+        <h3>Your cart is empty</h3>
+        <p>Visit the shop to find something you love.</p>
+        <a href="{% url 'shop:support' %}#shop" class="btn-primary">Browse Shop</a>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

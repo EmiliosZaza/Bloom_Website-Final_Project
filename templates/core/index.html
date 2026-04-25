@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bloom — Home{% endblock %}
+{% block meta_description %}Bloom is a non-profit dedicated to reforesting the world, one tree at a time. Join us and plant your first tree today.{% endblock %}
+{% block meta_keywords %}bloom, volunteer, tree planting, reforestation, environment, non-profit, donate{% endblock %}
+
+{% block content %}
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="heroTitle">
+        <div class="container">
+            <div class="hero_inner">
+
+                <div>
+                    <div class="hero_eyebrow">Join the Movement — 1M Trees by 2030</div>
+                    <h1 class="hero_title" id="heroTitle">
+                        Together we can<br>
+                        <span class="highlight">heal our planet</span>
+                    </h1>
+                    <p class="hero_lead">
+                        Bloom is a non-profit dedicated to reforesting the world, one tree at a time.
+                        We organize planting events, habitat restoration projects, and community education programs — and we need your hands.
+                    </p>
+                    <div class="hero_actions">
+                        <a href="{% url 'shop:support' %}#shop" class="btn-primary">
+                            Shop Now
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                            </svg>
+                        </a>
+                        <a href="{% url 'shop:support' %}#donate" class="btn-ghost">Donate</a>
+                    </div>
+                </div>
+
+                <!-- Stats Card -->
+                <div class="hero-stats-card" aria-label="Environmental impact overview">
+                    <div class="stats-header">
+                        <h3>Our Impact This Year</h3>
+                        <span style="font-size:.72rem;font-weight:600;color:var(--green);background:var(--greentint);padding:3px 10px;border-radius:100px;">Growing</span>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item_icon stat-item_icon--green">
+                            <img src="{% static 'assets/icons/icon-tree.png' %}" style="width:18px;height:18px;object-fit:contain;" alt="" />
+                        </div>
+                        <div>
+                            <div class="stat-item_value">{{ total_trees }}</div>
+                            <div class="stat-item_label">Trees Planted</div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item_icon stat-item_icon--orange">
+                            <img src="{% static 'assets/icons/cart.png' %}" style="width:18px;height:18px;object-fit:contain;" alt="" />
+                        </div>
+                        <div>
+                            <div class="stat-item_value">{{ total_orders }}</div>
+                            <div class="stat-item_label">Orders Placed</div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item_icon stat-item_icon--green">
+                            <img src="{% static 'assets/icons/icon-leaf.png' %}" style="width:18px;height:18px;object-fit:contain;" alt="" />
+                        </div>
+                        <div>
+                            <div class="stat-item_value">{{ total_donations }}</div>
+                            <div class="stat-item_label">Donations Made</div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item_icon stat-item_icon--orange">
+                            <img src="{% static 'assets/icons/icon-impact.png' %}" style="width:18px;height:18px;object-fit:contain;" alt="" />
+                        </div>
+                        <div>
+                            <div class="stat-item_value">$1 = 5 🌳</div>
+                            <div class="stat-item_label">Our Promise</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section style="padding:64px 0;border-bottom:1px solid var(--border);" aria-labelledby="featuresTitle">
+        <div class="container">
+            <p class="section-label">How You Can Help</p>
+            <h2 style="font-family:-apple-system,sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--text1);margin:0 0 10px;" id="featuresTitle">Every action leaves a mark</h2>
+            <p style="font-size:1rem;color:var(--text3);font-weight:300;margin:0 0 40px;">Whether you have an afternoon or a lifetime, there is a place for you in the Bloom community.</p>
+
+            <div class="features_grid">
+                <div class="feature-card">
+                    <div class="feature-card_icon"><img src="{% static 'assets/icons/icon-tree-planting.png' %}" class="feature-card_icon-img" alt="" /></div>
+                    <h3 class="feature-card_title">Tree Planting Events</h3>
+                    <p class="feature-card_desc">Join one of our weekend planting days at sites across the country. No experience needed — just a willingness to get your hands in the soil.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card_icon"><img src="{% static 'assets/icons/icon-tasks.png' %}" class="feature-card_icon-img" alt="" /></div>
+                    <h3 class="feature-card_title">Shop for a Cause</h3>
+                    <p class="feature-card_desc">Every product in our store plants trees automatically. A Classic Tee plants 90 trees. A Hoodie plants 190. Shop and make an impact without lifting a shovel.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card_icon"><img src="{% static 'assets/icons/icon-log.png' %}" class="feature-card_icon-img" alt="" /></div>
+                    <h3 class="feature-card_title">Make a Direct Donation</h3>
+                    <p class="feature-card_desc">Every dollar you donate plants 5 trees — instantly logged and counted toward our live total. 100% of donations go directly to reforestation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card_icon"><img src="{% static 'assets/icons/icon-goal.png' %}" class="feature-card_icon-img" alt="" /></div>
+                    <h3 class="feature-card_title">Track Your Impact</h3>
+                    <p class="feature-card_desc">Create an account and every purchase and donation is tracked in your personal dashboard. Watch your tree total grow with every contribution.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card_icon"><img src="{% static 'assets/icons/icon-impact.png' %}" class="feature-card_icon-img" alt="" /></div>
+                    <h3 class="feature-card_title">See Real Results</h3>
+                    <p class="feature-card_desc">Our impact page shows live before-and-after restoration photos, CO₂ offset calculations, and a running total of every tree planted through the platform.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card_icon"><img src="{% static 'assets/icons/icon-corporate.png' %}" class="feature-card_icon-img" alt="" /></div>
+                    <h3 class="feature-card_title">Corporate Partnerships</h3>
+                    <p class="feature-card_desc">Looking for meaningful ESG impact? Partner with Bloom. Your brand gets co-branding, verified quarterly impact reports, and a live platform counting your trees.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACTIVITY and WEATHER -->
+    <section class="activity" aria-labelledby="activityTitle">
+        <div class="container">
+            <div class="activity_inner">
+
+                <!-- Activity Feed -->
+                <div>
+                    <p class="section-label">On The Ground</p>
+                    <h2 style="font-family:-apple-system,sans-serif;font-size:1.6rem;font-weight:700;color:var(--text1);margin:0 0 6px;" id="activityTitle">Latest Activity</h2>
+                    <p style="font-size:.88rem;color:var(--text3);margin:0 0 24px;">Recent purchases and donations powering reforestation across Greece</p>
+
+                    <div class="activity-feed">
+                        {% for event in feed %}
+                        <div class="feed-card">
+                            <div class="feed-card_dot" style="background:{% if event.event_type == 'donate' %}var(--red){% elif event.event_type == 'purchase' %}var(--green){% else %}var(--orange){% endif %};"></div>
+                            <div class="feed-card_content">
+                                <p class="feed-card_text">{{ event.text|safe }}</p>
+                                <div class="feed-card_meta">
+                                    {{ event.created_at|timesince }} ago
+                                    <span class="feed-card_tag tag-{{ event.tag }}">{{ event.label }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="feed-card">
+                            <div class="feed-card_content">
+                                <p class="feed-card_text">No activity yet — be the first to contribute!</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Weather Widget -->
+                <aside aria-label="Weather widget">
+                    <div class="weather-widget" id="weatherWidget">
+                        <div class="weather-widget_header">
+                            <h3>Weather</h3>
+                            <button class="weather-refresh-btn" id="weatherRefresh" aria-label="Refresh weather">
+                                <img src="{% static 'assets/icons/icon-refresh.png' %}" class="weather-refresh-img" alt="" />
+                            </button>
+                        </div>
+                        <div class="weather-widget_body">
+                            <form class="weather-location-form" id="weatherForm" role="search" aria-label="Search weather by city">
+                                <label for="weatherInput" class="sr-only">City name</label>
+                                <input type="text" class="weather-input" id="weatherInput"
+                                       placeholder="Enter city name…" autocomplete="off" aria-label="City name" />
+                                <button type="submit" class="weather-search-btn">Search</button>
+                            </form>
+                            <div class="weather-loading" id="weatherLoading" role="status" aria-label="Loading weather data">
+                                <div class="spinner" aria-hidden="true"></div>
+                                <p>Fetching weather…</p>
+                            </div>
+                            <p class="weather-error" id="weatherError" role="alert" aria-live="assertive"></p>
+                            <div class="weather-placeholder" id="weatherPlaceholder">
+                                <div class="weather-placeholder-icon" aria-hidden="true">
+                                    <img src="{% static 'assets/icons/icon-globe.png' %}" class="weather-placeholder-img" alt="" />
+                                </div>
+                                <p>Search for a city to see current weather conditions</p>
+                            </div>
+                            <div class="weather-display" id="weatherDisplay" aria-live="polite">
+                                <div class="weather-main">
+                                    <div class="weather-icon-wrap" id="weatherIconDisplay" aria-hidden="true"></div>
+                                    <div>
+                                        <div class="weather-temp" id="weatherTemp">—</div>
+                                        <div class="weather-city" id="weatherCity">—</div>
+                                        <div class="weather-desc" id="weatherDesc">—</div>
+                                    </div>
+                                </div>
+                                <div class="weather-details">
+                                    <div class="weather-detail-item"><span class="weather-detail-item_label">Feels Like</span><span class="weather-detail-item_value" id="weatherFeelsLike">—</span></div>
+                                    <div class="weather-detail-item"><span class="weather-detail-item_label">Humidity</span><span class="weather-detail-item_value" id="weatherHumidity">—</span></div>
+                                    <div class="weather-detail-item"><span class="weather-detail-item_label">Wind</span><span class="weather-detail-item_value" id="weatherWind">—</span></div>
+                                    <div class="weather-detail-item"><span class="weather-detail-item_label">Visibility</span><span class="weather-detail-item_value" id="weatherVisibility">—</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <section class="cta-banner" aria-labelledby="ctaTitle">
+        <div class="container">
+            <div class="cta-banner_inner">
+                <div class="cta-banner_text">
+                    <h2 id="ctaTitle">Ready to make a difference?</h2>
+                    <p>Shop our merch, make a donation, or volunteer on the ground. Every action — big or small — plants a tree and heals the planet.</p>
+                </div>
+                <div style="display:flex;align-items:center;">
+                    <a href="{% url 'shop:support' %}" class="btn-white">
+                        Support Us
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

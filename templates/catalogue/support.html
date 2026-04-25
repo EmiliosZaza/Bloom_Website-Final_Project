@@ -1,0 +1,373 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bloom — Support Us{% endblock %}
+{% block meta_description %}Shop Bloom merch or make a donation. Every dollar plants 5 trees — 100% of profits go to reforestation.{% endblock %}
+{% block meta_keywords %}bloom shop, merch, donate, trees, reforestation, support{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style-support.css' %}" />
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/js-support.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════ -->
+<section class="support-hero" aria-labelledby="supportHeroTitle">
+    <div class="container">
+        <div class="support-hero_inner">
+            <div class="support-hero_content">
+                <p class="section-label">Support the Cause</p>
+                <h1 class="support-hero_title" id="supportHeroTitle">
+                    Every purchase,<br>
+                    <span class="highlight">every donation plants trees</span>
+                </h1>
+                <p class="support-hero_sub">Shop our merch or make a direct donation. 100% of profits fund reforestation across Greece. <strong>${{ trees_per_dollar }} = 1 dollar plants {{ trees_per_dollar }} trees.</strong></p>
+                <div class="support-hero_actions">
+                    <a href="#shop"   class="btn btn-primary">Shop Now</a>
+                    <a href="#donate" class="btn btn-ghost">Donate</a>
+                </div>
+            </div>
+            <div class="support-hero_stat">
+                <div class="support-stat-card">
+                    <div class="support-stat-card_number">{{ total_trees|default:"0" }}</div>
+                    <div class="support-stat-card_label">Total trees planted</div>
+                    <div class="support-stat-card_rate" data-trees-dollar="{{ trees_per_dollar }}">${{ trees_per_dollar }} = {{ trees_per_dollar }} trees</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SHOP SECTION
+════════════════════════════════════════════════════════════ -->
+<section class="shop-section" id="shop" aria-labelledby="shopTitle">
+    <div class="container">
+
+        <div class="shop-header">
+            <p class="section-label">Our Shop</p>
+            <h2 class="shop-title" id="shopTitle">Bloom Merch</h2>
+            <p class="shop-sub">Wear the cause. All profits go toward planting more trees.</p>
+        </div>
+
+        <!-- Search and filters -->
+        <div class="shop-toolbar">
+            <form method="get" action="#shop" class="shop-search-form" id="shopSearchForm" role="search">
+                <input type="hidden" name="category" value="{{ selected_category }}" />
+                <div class="shop-search-wrap">
+                    <input type="text" name="q" id="shopSearch"
+                           value="{{ search_query }}"
+                           placeholder="Search products…"
+                           maxlength="100"
+                           aria-label="Search products" />
+                    <button type="submit" class="shop-search-btn" aria-label="Search">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Price range filter -->
+                <div class="shop-price-filter">
+                    <input type="number" name="min_price" id="minPrice"
+                           value="{{ min_price }}" placeholder="Min $" min="0" max="9999" />
+                    <span>—</span>
+                    <input type="number" name="max_price" id="maxPrice"
+                           value="{{ max_price }}" placeholder="Max $" min="0" max="9999" />
+                    <button type="submit" class="filter-btn">Filter</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Category tabs -->
+        <div class="shop-categories" role="group" aria-label="Filter by category">
+            <a href="?#shop" class="filter-btn {% if not selected_category %}active{% endif %}">All</a>
+            {% for cat in categories %}
+            <a href="?category={{ cat.slug }}#shop"
+               class="filter-btn {% if selected_category == cat.slug %}active{% endif %}">
+                {{ cat.name }}
+            </a>
+            {% endfor %}
+        </div>
+
+        <!-- Product grid -->
+        <div class="shop-grid" id="shopGrid" aria-label="Products">
+            {% for product in products %}
+            <div class="product-card"
+                 data-product-id="{{ product.id }}"
+                 aria-label="{{ product.name }}">
+
+                <div class="product-card_img">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy" />
+                    {% else %}
+                    <div class="product-card_img-placeholder">
+                        <img src="{% static 'assets/icons/icon-leaf.png' %}" alt="" />
+                    </div>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                    <button class="product-card_wishlist {% if product.id in wishlist_ids %}wishlisted{% endif %}"
+                            data-product-id="{{ product.id }}"
+                            aria-label="{% if product.id in wishlist_ids %}Remove from wishlist{% else %}Add to wishlist{% endif %}">
+                        <svg viewBox="0 0 24 24" fill="{% if product.id in wishlist_ids %}currentColor{% else %}none{% endif %}"
+                             stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </button>
+                    {% endif %}
+
+                    {% if product.stock == 0 %}
+                    <span class="product-card_stock-badge product-card_stock-badge--out">Out of stock</span>
+                    {% elif product.stock <= 5 %}
+                    <span class="product-card_stock-badge product-card_stock-badge--low">Only {{ product.stock }} left</span>
+                    {% endif %}
+                </div>
+
+                <div class="product-card_body">
+                    <div class="product-card_meta-top">
+                        <span class="product-card_category">{{ product.category.name }}</span>
+                        {% if product.avg_rating %}
+                        <span class="product-card_rating">★ {{ product.avg_rating }}</span>
+                        {% endif %}
+                    </div>
+                    <h3 class="product-card_name">{{ product.name }}</h3>
+                    <p class="product-card_desc">{{ product.description|truncatechars:80 }}</p>
+
+                    <div class="product-card_footer">
+                        <span class="product-card_price">${{ product.price }}</span>
+                        <span style="font-size:.72rem;color:var(--green);font-weight:600;display:block;margin-top:2px;">🌳 Plants {{ product.trees_per_purchase }} trees</span>
+                        <div class="product-card_actions">
+                            <button class="product-card_view-btn"
+                                    data-product-id="{{ product.id }}"
+                                    aria-label="Quick view {{ product.name }}">
+                                View
+                            </button>
+                            {% if product.stock > 0 %}
+                                {% if user.is_authenticated %}
+                                <button class="product-card_cart-btn"
+                                        data-product-id="{{ product.id }}"
+                                        aria-label="Add {{ product.name }} to cart">
+                                    Add to Cart
+                                </button>
+                                {% else %}
+                                <button class="product-card_cart-btn"
+                                        data-auth-trigger="login"
+                                        aria-label="Log in to add to cart">
+                                    Add to Cart
+                                </button>
+                                {% endif %}
+                            {% else %}
+                            <button class="product-card_cart-btn" disabled>Out of Stock</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="shop-empty">No products found. <a href="{% url 'shop:support' %}">Clear filters</a></p>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DONATE SECTION
+════════════════════════════════════════════════════════════ -->
+<section class="donate-section" id="donate" aria-labelledby="donateTitle">
+    <div class="container">
+
+        <div class="donate-header">
+            <p class="section-label">Make a Difference</p>
+            <h2 class="donate-title" id="donateTitle">Plant trees with a donation</h2>
+            <p class="donate-sub">Can't make it out to a site? A direct donation funds our nurseries, equipment, and land access. Every dollar plants 5 trees.</p>
+        </div>
+
+        <div class="donate-layout">
+
+            <div class="donate-form-card">
+                {% if user.is_authenticated %}
+
+                <div class="donate-amounts" role="group" aria-label="Quick donation amounts">
+                    <button class="donate-amount-btn" data-amount="5">$5 <span>25 trees</span></button>
+                    <button class="donate-amount-btn" data-amount="10">$10 <span>50 trees</span></button>
+                    <button class="donate-amount-btn" data-amount="25">$25 <span>125 trees</span></button>
+                    <button class="donate-amount-btn" data-amount="50">$50 <span>250 trees</span></button>
+                    <button class="donate-amount-btn" data-amount="100">$100 <span>500 trees</span></button>
+                </div>
+
+                <form id="donateForm" novalidate>
+                    {% csrf_token %}
+
+                    <div class="donate-field">
+                        <label for="donateAmount">Donation Amount ($)</label>
+                        <div class="donate-amount-wrap">
+                            <span class="donate-amount-prefix">$</span>
+                            <input type="number" id="donateAmount" name="amount"
+                                   placeholder="e.g. 20"
+                                   min="1" max="10000" step="1"
+                                   required />
+                        </div>
+                        <span class="donate-field_hint" id="donateTreesHint">
+                            That plants <strong id="donateTreesCount">0</strong> trees
+                        </span>
+                        <span class="donate-field_error" id="donateAmountError"></span>
+                    </div>
+
+                    <div class="donate-field">
+                        <label for="donateMessage">Message <span style="font-weight:400;color:var(--text3);">(optional)</span></label>
+                        <textarea id="donateMessage" name="message" rows="3"
+                                  placeholder="Leave a message for the Bloom community…"
+                                  maxlength="300"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary donate-submit">
+                        Donate Now
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </button>
+
+                    <p class="donate-notice">100% of your donation goes toward tree planting. No admin fees.</p>
+                </form>
+
+                {% else %}
+                <div class="donate-guest">
+                    <img src="{% static 'assets/icons/icon-leaf.png' %}" alt="" style="width:48px;height:48px;object-fit:contain;opacity:.6;margin-bottom:16px;" />
+                    <h3>Log in to donate</h3>
+                    <p>Create a free account to make a donation and track the trees you plant through your dashboard.</p>
+                    <button class="btn-primary" data-auth-trigger="register">Create Account</button>
+                    <p style="margin-top:12px;font-size:.84rem;color:var(--text3);">
+                        Already have an account? <button class="auth-switch-btn" data-auth-trigger="login">Log in</button>
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="donate-impact">
+                <h3 class="donate-impact_title">What your donation does</h3>
+                <ul class="donate-impact_list">
+                    <li class="donate-impact_item">
+                        <div class="donate-impact_icon">🌱</div>
+                        <div><strong>$5</strong><p>Plants 25 native saplings in a restored forest site</p></div>
+                    </li>
+                    <li class="donate-impact_item">
+                        <div class="donate-impact_icon">🌳</div>
+                        <div><strong>$20</strong><p>Funds a full day's nursery care for 100 seedlings</p></div>
+                    </li>
+                    <li class="donate-impact_item">
+                        <div class="donate-impact_icon">🏔️</div>
+                        <div><strong>$50</strong><p>Covers transport and equipment for one planting session</p></div>
+                    </li>
+                    <li class="donate-impact_item">
+                        <div class="donate-impact_icon">🌍</div>
+                        <div><strong>$100</strong><p>Plants 500 trees — enough to restore a small clearing</p></div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PRODUCT QUICK-VIEW MODAL
+════════════════════════════════════════════════════════════ -->
+<div class="product-modal-backdrop" id="productModalBackdrop" aria-hidden="true"></div>
+
+<div class="product-modal" id="productModal" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+    <button class="product-modal_close" id="productModalClose" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+    </button>
+
+    <div class="product-modal_inner">
+
+        <div class="product-modal_img-wrap">
+            <img id="productModalImg" src="" alt="" />
+        </div>
+
+        <div class="product-modal_details">
+            <span class="product-modal_category" id="productModalCategory"></span>
+            <h2 class="product-modal_title" id="productModalTitle"></h2>
+            <div class="product-modal_rating" id="productModalRating"></div>
+            <p class="product-modal_price" id="productModalPrice"></p>
+            <p class="product-modal_desc" id="productModalDesc"></p>
+
+            <div class="product-modal_actions">
+                {% if user.is_authenticated %}
+                <button class="btn-primary product-modal_cart-btn" id="productModalAddCart">Add to Cart</button>
+                <button class="product-modal_wishlist-btn" id="productModalWishlist">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                    Wishlist
+                </button>
+                {% else %}
+                <button class="btn-primary" data-auth-trigger="login">Log in to purchase</button>
+                {% endif %}
+            </div>
+
+            <!-- Reviews list — populated by JS -->
+            <div class="product-modal_reviews" id="productModalReviewsSection" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border2);">
+                <h4 style="font-family:-apple-system,sans-serif;font-size:.82rem;font-weight:700;color:var(--text1);margin:0 0 10px;text-transform:uppercase;letter-spacing:.06em;">Reviews</h4>
+                <div id="productModalReviewsList" style="display:flex;flex-direction:column;gap:10px;"></div>
+            </div>
+
+            {% if user.is_authenticated %}
+            <div class="product-modal_review" id="productModalReviewSection" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border2);">
+                <h4 class="product-modal_review-title">Rate this product</h4>
+                <div class="star-rating" id="starRating" role="group" aria-label="Star rating">
+                    {% for i in "12345" %}
+                    <button class="star-btn" data-star="{{ forloop.counter }}" aria-label="{{ forloop.counter }} stars">★</button>
+                    {% endfor %}
+                </div>
+                <textarea id="reviewText" placeholder="Write a review (optional)…" maxlength="500" rows="2"></textarea>
+                <button class="btn-ghost" id="submitReviewBtn">Submit Review</button>
+            </div>
+            {% endif %}
+
+            <div class="product-modal_similar" id="productModalSimilar" style="display:none;">
+                <h4 class="product-modal_similar-title">You might also like</h4>
+                <div class="product-modal_similar-grid" id="productModalSimilarGrid"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Donation confirmation modal -->
+<div class="donate-success-modal" id="donateConfirmModal" role="dialog" aria-modal="true" style="display:none;">
+    <div class="donate-success-modal_inner">
+        <div class="donate-success-modal_icon">🌱</div>
+        <h3>Confirm your donation</h3>
+        <p>You are about to donate <strong id="donateConfirmAmount"></strong>, which will plant <strong id="donateConfirmTrees"></strong> trees.</p>
+        <p style="font-size:.82rem;color:var(--text3);margin-top:6px;">This action cannot be undone.</p>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:8px;">
+            <button class="btn-primary" id="donateConfirmYes">Yes, donate</button>
+            <button class="btn-ghost" id="donateConfirmNo">Cancel</button>
+        </div>
+    </div>
+</div>
+<div class="auth-backdrop" id="donateConfirmBackdrop" style="display:none;"></div>
+
+<!-- Donation success modal -->
+<div class="donate-success-modal" id="donateSuccessModal" role="dialog" aria-modal="true" style="display:none;">
+    <div class="donate-success-modal_inner">
+        <div class="donate-success-modal_icon">🌳</div>
+        <h3>Thank you!</h3>
+        <p>Your donation of <strong id="donateSuccessAmount"></strong> will plant <strong id="donateSuccessTrees"></strong> trees.</p>
+        <button class="btn-primary" id="donateSuccessClose">Done</button>
+    </div>
+</div>
+<div class="auth-backdrop" id="donateSuccessBackdrop" style="display:none;"></div>
+
+{% endblock %}

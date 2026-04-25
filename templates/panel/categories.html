@@ -1,0 +1,31 @@
+{% extends 'panel/base_panel.html' %}
+{% load static %}
+{% block title %}Admin — Categories{% endblock %}
+{% block meta_description %}Manage categories{% endblock %}
+{% block meta_keywords %}admin, categories{% endblock %}
+{% block panel_content %}
+<div class="panel-header">
+    <h1 class="panel-header_title">Categories</h1>
+    <a href="{% url 'panel:category_add' %}" class="btn-primary">+ Add Category</a>
+</div>
+<div class="panel-table-wrap">
+    <table class="panel-table">
+        <thead><tr><th>Category</th><th>Subcategories</th><th>Products</th><th>Actions</th></tr></thead>
+        <tbody>
+        {% for cat in categories %}
+        <tr>
+            <td><strong>{{ cat.name }}</strong></td>
+            <td>
+                {% for sub in cat.subcategories.all %}<span class="panel-badge panel-badge--user" style="margin-right:4px;">{{ sub.name }}</span>{% empty %}<span style="color:var(--text3);">None</span>{% endfor %}
+                <a href="{% url 'panel:subcategory_add' cat.id %}" style="font-size:.75rem;color:var(--green);margin-left:6px;">+ Add</a>
+            </td>
+            <td>{{ cat.products.count }}</td>
+            <td><a href="{% url 'panel:category_delete' cat.id %}" class="action-btn delete" style="background:rgba(192,57,43,.1);color:#c0392b;">Delete</a></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4" style="color:var(--text3);">No categories yet.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

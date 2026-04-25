@@ -1,0 +1,299 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="{% block meta_description %}Bloom — a non-profit volunteer platform dedicated to reforesting the world, one tree at a time.{% endblock %}" />
+    <meta name="author" content="Bloom Non-Profit" />
+    <meta name="keywords" content="{% block meta_keywords %}bloom, trees, reforestation, volunteer, environment, non-profit{% endblock %}" />
+    <meta name="theme-color" content="#2d6a2d" />
+
+    <title>{% block title %}Bloom{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+          crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style-auth.css' %}" />
+
+    {% block extra_css %}{% endblock %}
+
+    <link rel="icon" href="{% static 'assets/logo.png' %}" type="image/png" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="{% static 'js/main.js' %}" defer></script>
+    <script src="{% static 'js/js-auth.js' %}" defer></script>
+
+    {% block extra_js %}{% endblock %}
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light sticky-top"
+     id="navbar"
+     role="navigation"
+     aria-label="Main navigation"
+     style="background: var(--card-bg); border-bottom: 1px solid var(--border); box-shadow: var(--shadow1);">
+    <div class="container">
+
+        <a href="{% url 'core:home' %}" class="navbar-brand d-flex align-items-center gap-2" aria-label="Bloom Home">
+            <div class="logo-icon" aria-hidden="true">
+                <img src="{% static 'assets/logo.png' %}"
+                     alt="Bloom logo"
+                     width="52" height="52"
+                     style="width:52px;height:52px;object-fit:contain;border-radius:8px;"
+                     onerror="this.style.display='none'" />
+            </div>
+            <div class="logo-text">
+                <span class="logo-text_name">Bloom</span>
+                <span class="logo-text_tagline">Grow. Protect. Thrive.</span>
+            </div>
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navLinks"
+                aria-controls="navLinks"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navLinks">
+            <ul class="navbar-nav ms-auto align-items-center gap-1">
+                <li class="nav-item"><a href="{% url 'core:home' %}"        class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="{% url 'shop:support' %}"     class="nav-link nav-link--support">Support Us</a></li>
+                <li class="nav-item"><a href="{% url 'core:impact' %}"      class="nav-link">Impact</a></li>
+                <li class="nav-item"><a href="{% url 'core:about' %}"       class="nav-link">About</a></li>
+                <li class="nav-item"><a href="{% url 'core:contact' %}"     class="nav-link">Contact</a></li>
+            </ul>
+
+            {% if user.is_authenticated %}
+            <a href="{% url 'shop:cart' %}" class="nav-cart ms-2" aria-label="View cart">
+                <img src="{% static 'assets/icons/cart.png' %}" alt="Cart" style="width:20px;height:20px;object-fit:contain;" />
+                {% if cart_count > 0 %}
+                <span class="nav-cart_badge">{{ cart_count }}</span>
+                {% endif %}
+            </a>
+            {% endif %}
+
+            <div class="nav-auth ms-2 d-flex align-items-center gap-2">
+                {% if user.is_authenticated %}
+                    {% if user.is_staff %}
+                    <a href="{% url 'panel:dashboard' %}" class="nav-link nav-link--admin">Admin Panel</a>
+                    {% endif %}
+                    <a href="{% url 'accounts:dashboard' %}" class="nav-link nav-link--user">
+                        {% if user.profile.avatar %}
+                        <img src="{{ user.profile.avatar.url }}"
+                             alt="{{ user.username }}"
+                             style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:2px solid var(--green);flex-shrink:0;" />
+                        {% else %}
+                        <img src="{% static 'assets/icons/icon-person.png' %}"
+                             alt=""
+                             aria-hidden="true"
+                             style="width:16px;height:16px;object-fit:contain;" />
+                        {% endif %}
+                        {{ user.first_name|default:user.username }}
+                    </a>
+                    <form method="post" action="{% url 'accounts:logout' %}" style="margin:0;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link nav-link--logout">Logout</button>
+                    </form>
+                {% else %}
+                    <button class="nav-link nav-link--login" id="navLoginBtn" data-auth-trigger="login">Login</button>
+                    <button class="btn-primary btn-primary--sm" id="navRegisterBtn" data-auth-trigger="register">Register</button>
+                {% endif %}
+            </div>
+
+            <button class="theme-toggle ms-3" id="themeToggle" aria-label="Toggle dark mode" title="Toggle light / dark mode">
+                <img class="icon-sun"  src="{% static 'assets/icons/icon-sun.png' %}"  alt="Light mode" aria-hidden="true" />
+                <img class="icon-moon" src="{% static 'assets/icons/icon-moon.png' %}" alt="Dark mode"  aria-hidden="true" />
+            </button>
+        </div>
+
+    </div>
+</nav>
+
+<main class="page-content">
+    {% block content %}{% endblock %}
+</main>
+
+<footer role="contentinfo">
+    <div class="container">
+        <div class="footer_inner">
+            <p class="footer_copy">&copy; 2026 Bloom. All rights reserved. Registered Non-Profit.</p>
+            <nav class="footer_links" aria-label="Footer navigation">
+                <a href="{% url 'core:home' %}">Home</a>
+                <a href="{% url 'shop:support' %}">Support Us</a>
+                <a href="{% url 'core:impact' %}">Impact</a>
+                <a href="{% url 'core:about' %}">About</a>
+                <a href="{% url 'core:contact' %}">Contact</a>
+            </nav>
+        </div>
+    </div>
+</footer>
+
+{% if not user.is_authenticated %}
+<div class="auth-backdrop" id="authBackdrop" aria-hidden="true"></div>
+
+<div class="auth-modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+
+    <div class="auth-modal_tabs" role="tablist">
+        <button class="auth-tab active" id="tabLogin" role="tab" aria-selected="true"  aria-controls="panelLogin">Login</button>
+        <button class="auth-tab"        id="tabRegister" role="tab" aria-selected="false" aria-controls="panelRegister">Register</button>
+    </div>
+
+    <button class="auth-modal_close" id="authModalClose" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+    </button>
+
+    <!-- ── LOGIN PANEL ── -->
+    <div class="auth-panel active" id="panelLogin" role="tabpanel" aria-labelledby="tabLogin">
+        <div class="auth-modal_header">
+            <h2 class="auth-modal_title" id="authModalTitle">Welcome back</h2>
+            <p class="auth-modal_sub">Log in to shop, donate, and track your impact.</p>
+        </div>
+
+        <form method="post" action="{% url 'accounts:login' %}" id="loginForm" novalidate>
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}" />
+
+            <div class="auth-field">
+                <label for="loginUsername">Username</label>
+                <input type="text" id="loginUsername" name="username"
+                       placeholder="your username"
+                       maxlength="150" required autocomplete="username" />
+                <span class="auth-field_error" id="loginUsernameError"></span>
+            </div>
+
+            <div class="auth-field">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" name="password"
+                       placeholder="••••••••"
+                       maxlength="128" required autocomplete="current-password" />
+                <span class="auth-field_error" id="loginPasswordError"></span>
+            </div>
+
+            {% if login_error %}
+            <p class="auth-error-msg">{{ login_error }}</p>
+            {% endif %}
+
+            <button type="submit" class="btn-primary auth-submit">
+                Log In
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+            </button>
+        </form>
+
+        <p class="auth-modal_switch">
+            Don't have an account?
+            <button class="auth-switch-btn" data-auth-trigger="register">Register here</button>
+        </p>
+
+        <!-- ── DEMO CREDENTIALS ── -->
+        <div class="demo-credentials">
+            <div class="demo-credentials_label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="width:13px;height:13px;flex-shrink:0;">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                Demo credentials — click to fill
+            </div>
+            <div class="demo-credentials_grid">
+                <button class="demo-credential-card" data-username="admin" data-password="admin1234" type="button">
+                    <span class="demo-credential-card_role demo-credential-card_role--admin">Admin</span>
+                    <span class="demo-credential-card_user">admin</span>
+                    <span class="demo-credential-card_pass">admin1234</span>
+                </button>
+                <button class="demo-credential-card" data-username="testuser" data-password="user1234" type="button">
+                    <span class="demo-credential-card_role demo-credential-card_role--user">User</span>
+                    <span class="demo-credential-card_user">testuser</span>
+                    <span class="demo-credential-card_pass">user1234</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── REGISTER PANEL ── -->
+    <div class="auth-panel" id="panelRegister" role="tabpanel" aria-labelledby="tabRegister">
+        <div class="auth-modal_header">
+            <h2 class="auth-modal_title">Join Bloom</h2>
+            <p class="auth-modal_sub">Create an account to start planting and tracking your impact.</p>
+        </div>
+
+        <form method="post" action="{% url 'accounts:register' %}" id="registerForm" novalidate>
+            {% csrf_token %}
+
+            <div class="auth-field">
+                <label for="regUsername">Username</label>
+                <input type="text" id="regUsername" name="username"
+                       placeholder="choose a username"
+                       maxlength="150" required autocomplete="username" />
+                <span class="auth-field_error" id="regUsernameError"></span>
+            </div>
+
+            <div class="auth-field">
+                <label for="regEmail">Email</label>
+                <input type="email" id="regEmail" name="email"
+                       placeholder="you@example.com"
+                       maxlength="254" required autocomplete="email" />
+                <span class="auth-field_error" id="regEmailError"></span>
+            </div>
+
+            <div class="auth-field">
+                <label for="regFirstName">First Name</label>
+                <input type="text" id="regFirstName" name="first_name"
+                       placeholder="your first name"
+                       maxlength="150" autocomplete="given-name" />
+                <span class="auth-field_error" id="regFirstNameError"></span>
+            </div>
+
+            <div class="auth-field">
+                <label for="regPassword1">Password</label>
+                <input type="password" id="regPassword1" name="password1"
+                       placeholder="at least 8 characters"
+                       maxlength="128" required autocomplete="new-password" />
+                <span class="auth-field_error" id="regPassword1Error"></span>
+            </div>
+
+            <div class="auth-field">
+                <label for="regPassword2">Confirm Password</label>
+                <input type="password" id="regPassword2" name="password2"
+                       placeholder="repeat your password"
+                       maxlength="128" required autocomplete="new-password" />
+                <span class="auth-field_error" id="regPassword2Error"></span>
+            </div>
+
+            {% if register_error %}
+            <p class="auth-error-msg">{{ register_error }}</p>
+            {% endif %}
+
+            <button type="submit" class="btn-primary auth-submit">
+                Create Account
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+            </button>
+        </form>
+
+        <p class="auth-modal_switch">
+            Already have an account?
+            <button class="auth-switch-btn" data-auth-trigger="login">Log in here</button>
+        </p>
+    </div>
+
+</div>
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

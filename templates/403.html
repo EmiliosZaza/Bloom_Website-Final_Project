@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bloom — Access Denied{% endblock %}
+{% block meta_description %}You do not have permission to access this page.{% endblock %}
+{% block meta_keywords %}403, forbidden, access denied, bloom{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="error-page">
+
+        <div class="error-page_visual" aria-hidden="true">
+            <img src="{% static 'assets/icons/icon-leaf.png' %}" alt="" class="error-page_leaf error-page_leaf--1" />
+            <img src="{% static 'assets/icons/icon-leaf.png' %}" alt="" class="error-page_leaf error-page_leaf--2" />
+            <img src="{% static 'assets/icons/icon-leaf.png' %}" alt="" class="error-page_leaf error-page_leaf--3" />
+            <span class="error-page_code">403</span>
+        </div>
+
+        <h1 class="error-page_title">You can't go in there</h1>
+        <p class="error-page_sub">You don't have permission to access this page. If you think this is a mistake, try logging in with an account that has the right access level.</p>
+
+        <div class="error-page_actions">
+            <a href="{% url 'core:home' %}" class="btn-primary">
+                Back to Home
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                     stroke-linecap="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+            </a>
+            {% if not user.is_authenticated %}
+            <button class="btn-ghost" data-auth-trigger="login">Log In</button>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}

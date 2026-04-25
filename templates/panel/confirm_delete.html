@@ -1,0 +1,15 @@
+{% extends 'panel/base_panel.html' %}
+{% load static %}
+{% block title %}Admin — Confirm Delete{% endblock %}
+{% block meta_description %}Confirm deletion{% endblock %}
+{% block meta_keywords %}admin, delete{% endblock %}
+{% block panel_content %}
+<div class="panel-confirm">
+    <h2>Delete "{{ object_name }}"?</h2>
+    <p>This action cannot be undone. All associated data will be permanently removed.</p>
+    <form method="post" style="display:flex;gap:10px;">{% csrf_token %}
+        <button type="submit" class="btn-primary" style="background:var(--red);border-color:var(--red);">Yes, delete</button>
+        <a href="{% url cancel_url %}" class="btn-ghost">Cancel</a>
+    </form>
+</div>
+{% endblock %}

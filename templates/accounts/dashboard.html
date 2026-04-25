@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bloom — Dashboard{% endblock %}
+{% block meta_description %}Your personal Bloom dashboard — track contributions, orders, donations, and recently viewed products.{% endblock %}
+{% block meta_keywords %}dashboard, contributions, orders, donations, wishlist, bloom{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style-dashboard.css' %}" />
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/js-dashboard.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="dashboard-hero">
+        <p class="section-label">My Account</p>
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:10px;">
+            {% if user.profile.avatar %}
+            <img src="{{ user.profile.avatar.url }}"
+                 alt="{{ user.username }}"
+                 style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid var(--green);box-shadow:0 0 0 4px var(--greentint);flex-shrink:0;" />
+            {% else %}
+            <div style="width:64px;height:64px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700;flex-shrink:0;letter-spacing:.04em;">
+                {{ user.first_name|first|upper }}{{ user.last_name|first|upper }}
+            </div>
+            {% endif %}
+            <h1 class="dashboard-hero_title" style="margin:0;">Welcome back, {{ user.first_name|default:user.username }}</h1>
+        </div>
+        <p class="dashboard-hero_sub">Here's a snapshot of your activity on Bloom.</p>
+    </div>
+
+    <div class="dashboard-grid">
+
+        <!-- ── My Impact ────────────────────────────────────── -->
+        <section class="dashboard-card" aria-labelledby="impactTitle">
+            <div class="dashboard-card_header">
+                <h2 class="dashboard-card_title" id="impactTitle">
+                    <img src="{% static 'assets/icons/icon-tree.png' %}" class="inline-icon" alt="" />
+                    My Impact
+                </h2>
+                <a href="{% url 'core:impact' %}" class="dashboard-card_link">View impact</a>
+            </div>
+            <div style="text-align:center;padding:16px 0;">
+                <div style="font-family:-apple-system,sans-serif;font-size:2.5rem;font-weight:700;color:var(--green);line-height:1;">{{ my_trees }}</div>
+                <div style="font-size:.85rem;color:var(--text3);margin-top:6px;">Trees planted through your purchases & donations</div>
+                <div style="font-size:.78rem;color:var(--text3);margin-top:4px;">$1 = 5 trees</div>
+            </div>
+            {% if not orders and not donations %}
+            <p class="dashboard-empty" style="text-align:center;"><a href="{% url 'shop:support' %}">Shop or donate to start planting</a></p>
+            {% endif %}
+        </section>
+
+        <!-- ── Orders ──────────────────────────────────────── -->
+        <section class="dashboard-card" aria-labelledby="ordersTitle">
+            <div class="dashboard-card_header">
+                <h2 class="dashboard-card_title" id="ordersTitle">
+                    <img src="{% static 'assets/icons/icon-tasks.png' %}" class="inline-icon" alt="" />
+                    Recent Orders
+                </h2>
+                <a href="{% url 'shop:support' %}#shop" class="dashboard-card_link">Shop now</a>
+            </div>
+            {% if orders %}
+            <ul class="dashboard-list">
+                {% for order in orders %}
+                <li class="dashboard-list_item">
+                    <div class="dashboard-list_main">
+                        <span class="dashboard-list_name">Order #{{ order.id }}</span>
+                        <span class="dashboard-list_badge badge-complete">${{ order.total }}</span>
+                    </div>
+                    <span class="dashboard-list_meta">{{ order.created_at|date:"d M Y" }} · {{ order.status|title }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="dashboard-empty">No orders yet. <a href="{% url 'shop:support' %}#shop">Visit the shop</a></p>
+            {% endif %}
+        </section>
+
+        <!-- ── Donations ────────────────────────────────────── -->
+        <section class="dashboard-card" aria-labelledby="donationsTitle">
+            <div class="dashboard-card_header">
+                <h2 class="dashboard-card_title" id="donationsTitle">
+                    <img src="{% static 'assets/icons/icon-leaf.png' %}" class="inline-icon" alt="" />
+                    My Donations
+                </h2>
+                <a href="{% url 'shop:support' %}#donate" class="dashboard-card_link">Donate again</a>
+            </div>
+            {% if donations %}
+            <ul class="dashboard-list">
+                {% for d in donations %}
+                <li class="dashboard-list_item">
+                    <div class="dashboard-list_main">
+                        <span class="dashboard-list_name">${{ d.amount }}</span>
+                        <span class="dashboard-list_badge badge-progress">{{ d.trees_equivalent }} trees</span>
+                    </div>
+                    <span class="dashboard-list_meta">{{ d.created_at|date:"d M Y" }}{% if d.message %} · "{{ d.message|truncatechars:40 }}"{% endif %}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="dashboard-empty">No donations yet. <a href="{% url 'shop:support' %}#donate">Make your first donation</a></p>
+            {% endif %}
+        </section>
+
+        <!-- ── Wishlist ─────────────────────────────────────── -->
+        <section class="dashboard-card" aria-labelledby="wishlistTitle">
+            <div class="dashboard-card_header">
+                <h2 class="dashboard-card_title" id="wishlistTitle">
+                    <img src="{% static 'assets/icons/icon-goal.png' %}" class="inline-icon" alt="" />
+                    Wishlist
+                </h2>
+                <a href="{% url 'shop:support' %}#shop" class="dashboard-card_link">Browse shop</a>
+            </div>
+            {% if wishlist %}
+            <div class="dashboard-product-grid">
+                {% for item in wishlist %}
+                <div class="dashboard-product-card"
+                     data-product-id="{{ item.product.id }}"
+                     data-product-name="{{ item.product.name }}"
+                     data-product-price="{{ item.product.price }}">
+                    <div class="dashboard-product-img">
+                        {% if item.product.image %}
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" />
+                        {% else %}
+                        <img src="{% static 'assets/icons/icon-leaf.png' %}" alt="product" />
+                        {% endif %}
+                    </div>
+                    <div class="dashboard-product-info">
+                        <span class="dashboard-product-name">{{ item.product.name }}</span>
+                        <span class="dashboard-product-price">${{ item.product.price }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="dashboard-empty">Your wishlist is empty. <a href="{% url 'shop:support' %}#shop">Browse products</a></p>
+            {% endif %}
+        </section>
+
+        <!-- ── Recently Viewed — Recommender ───────────────── -->
+        <section class="dashboard-card dashboard-card--wide" aria-labelledby="viewedTitle">
+            <div class="dashboard-card_header">
+                <h2 class="dashboard-card_title" id="viewedTitle">
+                    <img src="{% static 'assets/icons/icon-impact.png' %}" class="inline-icon" alt="" />
+                    Recently Viewed
+                </h2>
+                <span class="dashboard-card_hint">Based on your browsing</span>
+            </div>
+            {% if viewed %}
+            <div class="dashboard-product-grid">
+                {% for v in viewed %}
+                <div class="dashboard-product-card"
+                     data-product-id="{{ v.product.id }}"
+                     data-product-name="{{ v.product.name }}"
+                     data-product-price="{{ v.product.price }}">
+                    <div class="dashboard-product-img">
+                        {% if v.product.image %}
+                        <img src="{{ v.product.image.url }}" alt="{{ v.product.name }}" />
+                        {% else %}
+                        <img src="{% static 'assets/icons/icon-leaf.png' %}" alt="product" />
+                        {% endif %}
+                    </div>
+                    <div class="dashboard-product-info">
+                        <span class="dashboard-product-name">{{ v.product.name }}</span>
+                        <span class="dashboard-product-price">${{ v.product.price }}</span>
+                    </div>
+                    <span class="dashboard-product-meta">{{ v.viewed_at|timesince }} ago</span>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="dashboard-empty">No recently viewed products. <a href="{% url 'shop:support' %}#shop">Start browsing</a></p>
+            {% endif %}
+        </section>
+
+    </div>
+
+    <div class="dashboard-footer-actions">
+        <a href="{% url 'accounts:profile' %}" class="btn-ghost">
+            Edit Profile
+        </a>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Bloom — Contact{% endblock %}
+{% block meta_description %}Get in touch with Bloom. Have a question, want to volunteer, or partner with us? We'd love to hear from you.{% endblock %}
+{% block meta_keywords %}contact bloom, get in touch, volunteer enquiry, partnership, non-profit contact{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style-contact.css' %}" />
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/js-contact.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <!-- Heading -->
+    <div class="contact-hero">
+        <p class="section-label">Get In Touch</p>
+        <h1 class="contact-hero_title">We'd love to hear from you</h1>
+        <p class="contact-hero_sub">Have a question, want to get involved, or just want to say hello? Fill in the form below and we will get back to you as soon as we can.</p>
+    </div>
+
+    <div class="contact-layout">
+
+        <!-- Form panel -->
+        <div class="contact-form-wrap">
+            <div class="contact-form-panel">
+                <form id="contactForm" novalidate>
+
+                    <div class="contact-field">
+                        <label for="contactName">Full Name</label>
+                        <input type="text" id="contactName" name="name"
+                               placeholder="e.g. Sarah Mitchell"
+                               maxlength="60" required />
+                        <span class="contact-field_error" id="nameError">Please enter your name.</span>
+                    </div>
+
+                    <div class="contact-field">
+                        <label for="contactEmail">Email Address</label>
+                        <input type="email" id="contactEmail" name="email"
+                               placeholder="e.g. sarah@example.com"
+                               maxlength="80" required />
+                        <span class="contact-field_error" id="emailError">Please enter a valid email address.</span>
+                    </div>
+
+                    <div class="contact-field">
+                        <label for="contactSubject">Subject</label>
+                        <input type="text" id="contactSubject" name="subject"
+                               placeholder="e.g. Volunteering enquiry"
+                               maxlength="80" required />
+                        <span class="contact-field_error" id="subjectError">Please enter a subject (at least 5 characters).</span>
+                    </div>
+
+                    <div class="contact-field">
+                        <label for="contactMessage">Message</label>
+                        <textarea id="contactMessage" name="message" rows="5"
+                                  placeholder="Tell us what's on your mind..."
+                                  maxlength="1000" required></textarea>
+                        <span class="contact-field_error" id="messageError">Please enter a message (at least 10 characters).</span>
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="margin-top:8px;">
+                        Submit
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                        </svg>
+                    </button>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="contact-sidebar">
+
+            <div class="contact-map">
+                <iframe
+                    title="Bloom office location"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d201564.16061686064!2d23.620672486542876!3d37.873391381778376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a199709f059559%3A0xad1dacf4713268b2!2sAmerican%20College%20of%20Greece!5e0!3m2!1sen!2sgr!4v1772563532069!5m2!1sen!2sgr"
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+
+            <div class="contact-info">
+                <div class="contact-info_item">
+                    <img src="{% static 'assets/icons/icon-pin.png' %}" alt="Location" style="width:18px;height:18px;object-fit:contain;flex-shrink:0;margin-top:2px;" />
+                    <span>Gravias 6, Ag. Paraskevi 153 42</span>
+                </div>
+                <div class="contact-info_item">
+                    <img src="{% static 'assets/icons/icon-email.png' %}" alt="Email" style="width:18px;height:18px;object-fit:contain;flex-shrink:0;margin-top:2px;" />
+                    <span><!--email_off-->bloom@email.com<!--/email_off--></span>
+                </div>
+            </div>
+
+            <div class="contact-social">
+                <p class="contact-social_label">Follow us</p>
+                <div class="contact-social_links">
+                    <a href="#" class="contact-social_btn" aria-label="Follow Bloom on Instagram">
+                        <img src="{% static 'assets/instagram.png' %}" alt="Instagram" />
+                    </a>
+                    <a href="#" class="contact-social_btn" aria-label="Follow Bloom on X">
+                        <img src="{% static 'assets/x.png' %}" alt="X" />
+                    </a>
+                    <a href="#" class="contact-social_btn" aria-label="Follow Bloom on Facebook">
+                        <img src="{% static 'assets/facebook.png' %}" alt="Facebook" />
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Modals placed after all content to ensure correct stacking -->
+<div class="contact-modal-backdrop" id="contactModalBackdrop"></div>
+<div class="contact-modal" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+    <div class="contact-modal_header">
+        <div class="contact-modal_icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2 class="contact-modal_title" id="contactModalTitle">Message sent!</h2>
+        <p class="contact-modal_sub">Thanks for reaching out. Here is a summary of what you sent:</p>
+    </div>
+    <div class="contact-modal_body">
+        <dl class="contact-modal_summary" id="contactSummary"></dl>
+    </div>
+    <div class="contact-modal_footer">
+        <button type="button" class="btn-primary" id="contactModalClose">
+            Done
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+    </div>
+</div>
+
+{% endblock %}
