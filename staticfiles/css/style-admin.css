@@ -1,0 +1,75 @@
+/* Custom admin panel styles */
+
+.panel-layout { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 80px); }
+@media (max-width: 900px) { .panel-layout { grid-template-columns: 1fr; } }
+
+.panel-sidebar { background: var(--card-bg); border-right: 1px solid var(--border); padding: 28px 0; position: sticky; top: 80px; height: calc(100vh - 80px); overflow-y: auto; }
+.panel-sidebar_logo { padding: 0 20px 24px; border-bottom: 1px solid var(--border2); margin-bottom: 12px; }
+.panel-sidebar_logo span { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); }
+
+.panel-nav { list-style: none; padding: 0; margin: 0; }
+.panel-nav_link { display: flex; align-items: center; gap: 10px; padding: 10px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: .88rem; font-weight: 500; color: var(--text2); text-decoration: none; transition: all var(--time); border-left: 3px solid transparent; }
+.panel-nav_link:hover  { background: var(--section); color: var(--text1); }
+.panel-nav_link.active { background: var(--greentint); color: var(--green); border-left-color: var(--green); font-weight: 700; }
+.panel-nav_link img    { width: 16px; height: 16px; object-fit: contain; opacity: .6; }
+.panel-nav_link.active img { opacity: 1; }
+.panel-nav_divider { height: 1px; background: var(--border2); margin: 8px 20px; }
+
+.panel-main { padding: 36px 40px; }
+@media (max-width: 640px) { .panel-main { padding: 24px 16px; } }
+
+.panel-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.panel-header_title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--text1); margin: 0; }
+.panel-header_actions { display: flex; gap: 10px; }
+
+.panel-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin-bottom: 36px; }
+.panel-stat  { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow1); }
+.panel-stat_value { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 2rem; font-weight: 700; color: var(--green); line-height: 1; margin-bottom: 6px; }
+.panel-stat_label { font-size: .78rem; color: var(--text3); font-weight: 500; }
+
+.panel-table-wrap { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow1); }
+.panel-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.panel-table th { background: var(--section); padding: 12px 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text3); text-align: left; border-bottom: 1px solid var(--border); }
+.panel-table td { padding: 12px 16px; border-bottom: 1px solid var(--border2); color: var(--text1); vertical-align: middle; }
+.panel-table tr:last-child td { border-bottom: none; }
+.panel-table tr:hover td { background: var(--section); }
+.panel-table_img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; background: var(--section); }
+.panel-table_actions { display: flex; gap: 6px; }
+
+.panel-form-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; max-width: 640px; box-shadow: var(--shadow1); }
+.panel-field { display: flex; flex-direction: column; margin-bottom: 18px; }
+.panel-field label { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--text2); margin-bottom: 6px; }
+.panel-field input[type="text"], .panel-field input[type="number"], .panel-field input[type="date"], .panel-field input[type="file"], .panel-field textarea, .panel-field select { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: .92rem; color: var(--text1); outline: none; transition: border-color var(--time); width: 100%; resize: vertical; }
+.panel-field_hint { font-size: .72rem; color: var(--text3); margin-top: 4px; }
+.panel-checkbox { display: flex; align-items: center; gap: 10px; }
+.panel-checkbox input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--green); }
+.panel-form-actions { display: flex; gap: 10px; margin-top: 24px; }
+
+.panel-search { display: flex; gap: 8px; margin-bottom: 20px; }
+.panel-search input { flex: 1; max-width: 320px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; font-size: .88rem; color: var(--text1); outline: none; transition: border-color var(--time); }
+
+.panel-badge { font-size: .68rem; font-weight: 700; padding: 2px 8px; border-radius: 100px; white-space: nowrap; }
+.panel-badge--active   { background: rgba(74,124,63,.12);  color: var(--vibrant-green); }
+.panel-badge--complete { background: rgba(74,124,63,.12);  color: var(--vibrant-green); }
+.panel-badge--urgent   { background: rgba(192,57,43,.1);   color: var(--red); }
+.panel-badge--progress { background: rgba(45,106,45,.1);   color: var(--green); }
+.panel-badge--upcoming { background: rgba(160,82,45,.1);   color: var(--orange); }
+.panel-badge--staff    { background: rgba(45,106,45,.1);   color: var(--green); }
+.panel-badge--user     { background: var(--section);       color: var(--text3); }
+.panel-badge--inactive { background: var(--section);       color: var(--text3); }
+
+.panel-errors { background: rgba(192,57,43,.08); border: 1px solid rgba(192,57,43,.2); border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; }
+.panel-errors li { font-size: .88rem; color: var(--red); list-style: disc; margin-left: 16px; }
+
+.panel-confirm { max-width: 480px; }
+.panel-confirm h2 { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--text1); margin: 0 0 12px; }
+.panel-confirm p  { color: var(--text2); margin-bottom: 24px; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+@media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+.action-btn { display: inline-block; padding: 5px 12px; border-radius: 6px; font-size: .78rem; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: all var(--time); }
+.action-btn.edit         { background: var(--greentint); color: var(--green); }
+.action-btn.delete       { background: rgba(192,57,43,.1); color: var(--red); }
+.action-btn.edit:hover   { background: var(--green); color: #fff; }
+.action-btn.delete:hover { background: var(--red); color: #fff; }
