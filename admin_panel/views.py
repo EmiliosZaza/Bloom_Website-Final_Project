@@ -1,7 +1,5 @@
-"""
-Admin panel views — custom interface for staff/superusers only.
-All views protected by staff_required decorator.
-"""
+#Admin panel views - custom interface for staff only. All views protected by staff_required decorator.
+
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -15,7 +13,7 @@ from donations.models import Donation
 
 
 def staff_required(view_func):
-    """Decorator: redirect guests to login, raise 403 for logged-in non-staff users."""
+    #Decorator: redirect guests to login, raise 403 for logged-in non-staff users.
     @login_required
     def wrapped(request, *args, **kwargs):
         if not request.user.is_staff:
@@ -26,7 +24,7 @@ def staff_required(view_func):
 
 @staff_required
 def dashboard(request):
-    """Admin overview — key stats at a glance."""
+    #Admin overview - key stats at a glance.
     context = {
         'total_users':      User.objects.count(),
         'total_products':   Product.objects.count(),
@@ -41,7 +39,7 @@ def dashboard(request):
 
 @staff_required
 def products(request):
-    """List all products with optional search."""
+    #List all products with optional search.
     q  = request.GET.get('q', '').strip()
     qs = Product.objects.select_related('category', 'subcategory').order_by('-created_at')
     if q:
@@ -51,7 +49,7 @@ def products(request):
 
 @staff_required
 def product_add(request):
-    """Add a new product with image upload."""
+    #Add a new product with image upload.
     categories    = Category.objects.all()
     subcategories = Subcategory.objects.all()
 
@@ -97,7 +95,7 @@ def product_add(request):
 
 @staff_required
 def product_edit(request, product_id):
-    """Edit an existing product."""
+    #Edit an existing product.
     product       = get_object_or_404(Product, pk=product_id)
     categories    = Category.objects.all()
     subcategories = Subcategory.objects.all()
@@ -129,7 +127,7 @@ def product_edit(request, product_id):
 
 @staff_required
 def product_delete(request, product_id):
-    """Confirm and delete a product."""
+    #Confirm and delete a product.
     product = get_object_or_404(Product, pk=product_id)
     if request.method == 'POST':
         product.delete()
@@ -141,14 +139,14 @@ def product_delete(request, product_id):
 
 @staff_required
 def categories(request):
-    """List all categories and their subcategories."""
+    #List all categories and their subcategories.
     cats = Category.objects.prefetch_related('subcategories').all()
     return render(request, 'panel/categories.html', {'categories': cats})
 
 
 @staff_required
 def category_add(request):
-    """Add a new category."""
+    #Add a new category.
     if request.method == 'POST':
         name = request.POST.get('name', '').strip()[:80]
         desc = request.POST.get('description', '').strip()
@@ -160,7 +158,7 @@ def category_add(request):
 
 @staff_required
 def category_delete(request, cat_id):
-    """Confirm and delete a category."""
+    #Confirm and delete a category.
     cat = get_object_or_404(Category, pk=cat_id)
     if request.method == 'POST':
         cat.delete()
@@ -172,7 +170,7 @@ def category_delete(request, cat_id):
 
 @staff_required
 def subcategory_add(request, cat_id):
-    """Add a subcategory under an existing category."""
+    #Add a subcategory under an existing category.
     cat = get_object_or_404(Category, pk=cat_id)
     if request.method == 'POST':
         name = request.POST.get('name', '').strip()[:80]
@@ -186,7 +184,7 @@ def subcategory_add(request, cat_id):
 
 @staff_required
 def users(request):
-    """List all users with optional search by username or email."""
+    #List all users with optional search by username or email.
     q  = request.GET.get('q', '').strip()
     qs = User.objects.select_related('profile').order_by('-date_joined')
     if q:
@@ -196,7 +194,7 @@ def users(request):
 
 @staff_required
 def user_toggle_staff(request, user_id):
-    """Toggle staff status for a user. Cannot demote yourself."""
+    #Toggle staff status for a user. Cannot demote yourself.
     if request.method == 'POST':
         u = get_object_or_404(User, pk=user_id)
         if u != request.user:
@@ -207,7 +205,7 @@ def user_toggle_staff(request, user_id):
 
 @staff_required
 def user_delete(request, user_id):
-    """Confirm and delete a user. Cannot delete yourself."""
+    #Confirm and delete a user. Cannot delete yourself.
     u = get_object_or_404(User, pk=user_id)
     if u == request.user:
         return redirect('panel:users')

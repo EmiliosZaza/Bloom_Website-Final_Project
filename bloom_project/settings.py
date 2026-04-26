@@ -1,7 +1,4 @@
-"""
-Bloom — Django settings
-ITC4214 Web Technologies Final Project
-"""
+#Bloom — Django setting
 
 from pathlib import Path
 

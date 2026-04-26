@@ -1,6 +1,4 @@
-"""
-Accounts models — UserProfile, ViewedProduct
-"""
+#Accounts models — UserProfile, ViewedProduct
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -9,7 +7,6 @@ from django.dispatch import receiver
 
 
 class UserProfile(models.Model):
-    """Extended profile — one-to-one with Django's built-in User"""
     user       = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     avatar     = models.ImageField(upload_to='avatars/', blank=True, null=True)
     bio        = models.TextField(max_length=300, blank=True)
@@ -20,7 +17,7 @@ class UserProfile(models.Model):
 
 
 class ViewedProduct(models.Model):
-    """Records which products a logged-in user has viewed — used for recommender"""
+    #Records which products a logged-in user has viewed - used for recommender
     user       = models.ForeignKey(User, on_delete=models.CASCADE, related_name='viewed_products')
     product    = models.ForeignKey('catalogue.Product', on_delete=models.CASCADE)
     viewed_at  = models.DateTimeField(auto_now=True)

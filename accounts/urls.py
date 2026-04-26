@@ -1,6 +1,4 @@
-"""
-Accounts URLs — auth and profile
-"""
+#Accounts URLs — auth and profile
 
 from django.urls import path
 from . import views

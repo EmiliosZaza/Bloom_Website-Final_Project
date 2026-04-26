@@ -1,14 +1,11 @@
-"""
-Core models — ActivityEvent
-Task model removed: tasks page no longer exists in the platform.
-"""
+#Core models — ActivityEvent
 
 from django.db import models
 from django.contrib.auth.models import User
 
 
 class ActivityEvent(models.Model):
-    """Site-wide activity log shown on the homepage feed"""
+    #Site-wide activity log shown on the homepage feed
     TYPE_CHOICES = [
         ('complete', 'Completed'),
         ('add',      'Added'),

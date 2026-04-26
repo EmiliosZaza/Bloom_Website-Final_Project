@@ -1,5 +1,4 @@
-// BLOOM — js-support.js | Support page: shop, donate, product modal, cart, wishlist.
-// Requires jQuery 3.6+.
+// Support page: shop, donate, product modal, cart, wishlist.
 
 $(function () {
 
@@ -7,10 +6,7 @@ $(function () {
     const TREES_PER_DOLLAR = bloomDataEl ? parseInt(bloomDataEl.dataset.treesDollar, 10) : 5;
     const csrfToken        = $('[name=csrfmiddlewaretoken]').val();
 
-    // ══════════════════════════════════════════════════════════
-    // PRODUCT QUICK-VIEW MODAL
-    // ══════════════════════════════════════════════════════════
-
+    // Product Quick View Modal
     let activeProductId = null;
 
     $(document).on('click', '.product-card_view-btn, .product-card_img', function (e) {
@@ -60,7 +56,7 @@ $(function () {
                 $('#productModalSimilar').hide();
             }
 
-            // ── Reviews list ──────────────────────────────────
+            // Reviews list
             const $reviewsList = $('#productModalReviewsList');
             if ($reviewsList.length) {
                 $reviewsList.empty();
@@ -84,7 +80,7 @@ $(function () {
                 }
             }
 
-            // ── Review form — hide if user already reviewed ───
+            // Review form 
             const $reviewForm = $('#productModalReviewSection');
             if ($reviewForm.length) {
                 if (data.user_review) {
@@ -124,7 +120,7 @@ $(function () {
     $('#productModalBackdrop').on('click', closeProductModal);
     $(document).on('keydown', function (e) { if (e.key === 'Escape') closeProductModal(); });
 
-    // ── Add to cart ────────────────────────────────────────────
+    // Add to cart
     $('#productModalAddCart').on('click', function () {
         if (!activeProductId) return;
         addToCart(activeProductId);
@@ -171,7 +167,7 @@ $(function () {
         }
     }
 
-    // ── Wishlist toggle ────────────────────────────────────────
+    // Wishlist toggle
     $(document).on('click', '.product-card_wishlist', function (e) {
         e.stopPropagation();
         toggleWishlist($(this).data('product-id'), $(this));
@@ -200,7 +196,7 @@ $(function () {
         });
     }
 
-    // ── Star rating ────────────────────────────────────────────
+    // Star rating
     function resetStars() {
         $('#starRating .star-btn').removeClass('active');
         $('#reviewText').val('');
@@ -241,9 +237,7 @@ $(function () {
         if (productId) openProductModal(productId);
     }
 
-    // ══════════════════════════════════════════════════════════
-    // DONATE FORM
-    // ══════════════════════════════════════════════════════════
+    // Donate Form
 
     $(document).on('click', '.donate-amount-btn', function () {
         const amount = $(this).data('amount');
@@ -267,7 +261,7 @@ $(function () {
 
     let pendingDonation = null;
 
-    // ── Step 1: validate and show confirmation modal ───────────
+    //  Step 1: validate and show confirmation modal 
     $('#donateForm').on('submit', function (e) {
         e.preventDefault();
         const amount  = parseFloat($('#donateAmount').val());
@@ -288,7 +282,7 @@ $(function () {
         $('#donateConfirmModal, #donateConfirmBackdrop').show();
     });
 
-    // ── Step 2: confirmed — process the donation ───────────────
+    // Step 2: confirmed - process the donation 
     $('#donateConfirmYes').on('click', function () {
         if (!pendingDonation) return;
         $('#donateConfirmModal, #donateConfirmBackdrop').hide();
@@ -324,7 +318,7 @@ $(function () {
         });
     });
 
-    // ── Step 2: cancelled ──────────────────────────────────────
+    // Step 2: cancelled 
     $('#donateConfirmNo').on('click', function () {
         $('#donateConfirmModal, #donateConfirmBackdrop').hide();
         pendingDonation = null;

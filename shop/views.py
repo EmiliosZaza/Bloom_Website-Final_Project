@@ -1,6 +1,6 @@
 """
 Shop views — support page, cart, checkout, wishlist, AJAX endpoints
-Trees from purchases: price × quantity × 5 (computed at order time, not stored per product)
+Trees from purchases: price * quantity * 5 
 """
 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -16,12 +16,12 @@ from core.views import get_total_trees
 
 
 def _display_name(user):
-    """Return full name if set, otherwise username."""
+    #Return full name if set, otherwise username.
     return user.get_full_name() or user.username
 
 
 def support(request):
-    """Support Us page — shop + donate"""
+    #Support Us page 
     categories = Category.objects.prefetch_related('products').all()
     products   = Product.objects.filter(is_active=True).select_related('category', 'subcategory')
 
@@ -99,7 +99,7 @@ def remove_from_cart(request, item_id):
 @login_required
 @require_POST
 def checkout(request):
-    """Simulate a purchase — trees = total × 5"""
+    #Simulate a purchase
     items = CartItem.objects.filter(user=request.user).select_related('product')
     if not items.exists():
         return redirect('shop:cart')
@@ -153,7 +153,7 @@ def toggle_wishlist(request, product_id):
 
 
 def product_detail_ajax(request, product_id):
-    """AJAX — product detail for quick-view modal"""
+    #AJAX review
     product = get_object_or_404(Product, pk=product_id, is_active=True)
 
     if request.user.is_authenticated:

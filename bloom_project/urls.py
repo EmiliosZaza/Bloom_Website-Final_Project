@@ -1,7 +1,5 @@
-"""
-Bloom — mothership URL configuration
-All app URLs are namespaced and included here.
-"""
+#Mothership URL configuration
+
 
 from django.contrib import admin
 from django.urls import path, include

@@ -1,6 +1,4 @@
-"""
-Accounts views — login, register, logout, profile, dashboard
-"""
+#Accounts views — login, register, logout, profile, dashboard
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -14,7 +12,7 @@ from .models import ViewedProduct
 
 
 def login_view(request):
-    """Handle login form POST — redirects back to the page the user came from"""
+    #Handle login form POST - redirects back to the page the user came from
     if request.method == 'POST':
         username = request.POST.get('username', '').strip()
         password = request.POST.get('password', '')
@@ -34,7 +32,7 @@ def login_view(request):
 
 
 def register_view(request):
-    """Handle registration form POST"""
+    #Handle registration form POST
     if request.method == 'POST':
         username   = request.POST.get('username', '').strip()
         email      = request.POST.get('email', '').strip()
@@ -66,7 +64,7 @@ def register_view(request):
 
 
 def logout_view(request):
-    """One-click logout via POST form"""
+    #One-click logout via POST form
     if request.method == 'POST':
         logout(request)
     return redirect('core:home')
@@ -74,7 +72,7 @@ def logout_view(request):
 
 @login_required
 def profile(request):
-    """View and update profile info"""
+    #View and update profile info
     if request.method == 'POST':
         user       = request.user
         first_name = request.POST.get('first_name', '').strip()[:150]
@@ -98,7 +96,7 @@ def profile(request):
 
 @login_required
 def dashboard(request):
-    """Personal dashboard — orders, donations, wishlist, viewed products"""
+    #Personal dashboard - orders, donations, wishlist, viewed products
     user = request.user
 
     user_orders    = Order.objects.filter(user=user)
@@ -121,7 +119,7 @@ def dashboard(request):
 
 
 def record_view(request, product_id):
-    """AJAX — record a product view for the recommender system"""
+    #AJAX — record a product view for the recommender system
     if request.user.is_authenticated:
         try:
             product = Product.objects.get(pk=product_id)

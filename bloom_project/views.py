@@ -1,6 +1,4 @@
-"""
-Project-level views — custom error handlers
-"""
+#custom error handlers
 
 from django.shortcuts import render
 

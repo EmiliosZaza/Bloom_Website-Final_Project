@@ -1,11 +1,9 @@
-// BLOOM — js-dashboard.js | Dashboard interactions
-// Clicking a product card on the dashboard opens it on the support page.
-// Requires jQuery 3.6+.
+// Dashboard interactions
+// Clicking a product card on the dashboard opens it on the Support Us page.
 
 $(function () {
 
-    // Clicking a product card on the dashboard navigates to the support page
-    // with the product modal pre-opened via a hash parameter
+    // Clicking a product card on the dashboard navigates to the Support Us page
     $(document).on('click', '.dashboard-product-card', function () {
         const productId = $(this).data('product-id');
         if (productId) {

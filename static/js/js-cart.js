@@ -1,4 +1,4 @@
-// BLOOM — js-cart.js | Cart page: remove items via AJAX. Requires jQuery 3.6+.
+// Cart page JS
 
 $(function () {
 

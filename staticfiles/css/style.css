@@ -1,4 +1,4 @@
-/* Main Style Css used in every page*/
+/* Main Style Css used in every page */
 
 /* Tokens */
 :root {
@@ -59,7 +59,7 @@
 /* Support Us link — same style as other nav links, bold weight */
 #navbar a.nav-link--support { font-weight: 600; }
 
-/* ── Reset ─────────────────────────────────────────────────── */
+/* Reset */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text1); line-height: 1.6; transition: background var(--time), color var(--time); }
 ul     { list-style: none; }
@@ -72,7 +72,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .section-label { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
 
-/* ── Shared form input focus state ─────────────────────────── */
+/* Shared form input focus state */
 .auth-field input:focus,
 .contact-field input:focus,
 .contact-field textarea:focus,
@@ -255,16 +255,16 @@ footer { padding: 24px 0; border-top: 1px solid var(--border); }
 .footer_links a { font-size: .82rem; color: var(--text3); transition: color var(--time); }
 .footer_links a:hover { color: var(--green); }
 
-/* ── Shared inline icon ────────────────────────────────────── */
+/* Shared inline icon */
 .inline-icon { width: 16px; height: 16px; object-fit: contain; vertical-align: middle; display: inline-block; margin-right: 3px; position: relative; top: -1px; }
 
-/* ── Animations ────────────────────────────────────────────── */
+/* Animations */
 @keyframes fadeUp  { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
 @keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
 @keyframes pulse   { 0%,100% { opacity:1; transform:scale(1);   } 50% { opacity:.6; transform:scale(.85); } }
 @keyframes spin    { to { transform:rotate(360deg); } }
 
-/* ── Responsive ────────────────────────────────────────────── */
+/* Responsive */
 @media (max-width: 1024px) {
     .hero_inner, .activity_inner { grid-template-columns: 1fr; }
     .weather-widget { position: static; }
@@ -277,7 +277,7 @@ footer { padding: 24px 0; border-top: 1px solid var(--border); }
     .footer_inner      { flex-direction: column; text-align: center; }
 }
 
-/* ── Error pages (404, 403) ───────────────────────────────── */
+/* Error pages (404, 403) */
 .error-page {
     max-width: 520px;
     margin: 80px auto 100px;

@@ -1,7 +1,4 @@
-"""
-Core views — home, impact, about, contact
-Tree totals come from purchases + donations only.
-"""
+#Core views - home, impact, about, contact
 
 from django.shortcuts import render
 from .models import ActivityEvent
@@ -10,10 +7,7 @@ from shop.models import Order, OrderItem
 
 
 def get_total_trees():
-    """
-    Global tree count = (all order item subtotals × 5) + (all donation amounts × 5)
-    $1 = 5 trees across both revenue streams.
-    """
+    #Global tree count = (all order item subtotals × 5) + (all donation amounts × 5)
     purchase_trees = sum(
         int(item.price * item.quantity * 5)
         for item in OrderItem.objects.select_related('product').all()
@@ -23,7 +17,7 @@ def get_total_trees():
 
 
 def home(request):
-    """Homepage — stats from DB, activity feed."""
+    #Homepage - stats from DB, activity feed.
     total_trees     = get_total_trees()
     total_orders    = Order.objects.count()
     total_donations = Donation.objects.count()
@@ -38,13 +32,13 @@ def home(request):
 
 
 def impact(request):
-    """Impact page — live tree count from purchases and donations."""
+    #Impact page - live tree count from purchases and donations.
     total_trees = get_total_trees()
     return render(request, 'core/impact.html', {'total_trees': total_trees})
 
 
 def about(request):
-    """About page — team volunteers passed as context."""
+    #About page 
     volunteers = [
         {
             'image':    'assets/volunteer-sarah.png',
@@ -96,5 +90,5 @@ def about(request):
 
 
 def contact(request):
-    """Contact page."""
+    #Contact page.
     return render(request, 'core/contact.html')

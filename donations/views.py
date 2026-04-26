@@ -1,6 +1,4 @@
-"""
-Donations views — donate form POST
-"""
+#Donations views 
 
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -13,7 +11,7 @@ from shop.views import _display_name
 @login_required
 @require_POST
 def donate(request):
-    """Process a donation POST — requires login"""
+    #Process a donation POST 
     try:
         amount  = float(request.POST.get('amount', 0))
         message = request.POST.get('message', '').strip()[:300]

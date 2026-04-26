@@ -1,16 +1,16 @@
-// BLOOM — main.js | Shared logic for every page. Requires jQuery 3.6+.
+// Shared logic for every page.
 
-// ── Theme — runs before DOM ready to prevent flash ────────────
+// Theme 
 const applyTheme = t => {
     document.querySelector('html').setAttribute('data-theme', t);
     localStorage.setItem('tf-theme', t);
 };
 applyTheme(localStorage.getItem('tf-theme') || 'light');
 
-// ── Asset base path ───────────────────────────────────────────
+// Asset base path
 const assetBase = '/static/assets/';
 
-// ── Modal helper ──────────────────────────────────────────────
+// Modal helper
 window.bloomModal = {
     open(backdropSel, modalSel) {
         $(backdropSel + ', ' + modalSel).addClass('visible');
@@ -22,7 +22,7 @@ window.bloomModal = {
     }
 };
 
-// ── Shared input validators ───────────────────────────────────
+// Shared input validators 
 window.bloomValidate = {
 
     // Name fields — letters, spaces, apostrophes, commas, periods, hyphens
@@ -34,7 +34,7 @@ window.bloomValidate = {
         return value.trim().length > 0 && this.NAME_PATTERN.test(value.trim());
     },
 
-    // Username — letters, digits, @, ., +, -, _ (Django standard)
+    // Username - letters, digits, @, ., +, -, _ (Django standard)
     USERNAME_PATTERN: /^[\w.@+\-]+$/,
     isValidUsername(value) {
         return value.trim().length > 0 && this.USERNAME_PATTERN.test(value.trim());
@@ -46,7 +46,7 @@ window.bloomValidate = {
         return this.EMAIL_PATTERN.test(value.trim());
     },
 
-    // Free text — just checks min/max length
+    // Free text - just checks min/max length
     isValidLength(value, min, max) {
         const len = value.trim().length;
         if (min !== undefined && len < min) return false;
@@ -54,7 +54,7 @@ window.bloomValidate = {
         return true;
     },
 
-    // Number — checks min/max value
+    // Number - checks min/max value
     isValidNumber(value, min, max) {
         const n = parseFloat(value);
         if (isNaN(n)) return false;
@@ -63,7 +63,7 @@ window.bloomValidate = {
         return true;
     },
 
-    // Password — any char, enforces minLength on register
+    // Password - any char, enforces minLength on register
     isValidPassword(value, minLength) {
         return value.length >= (minLength || 1);
     }
@@ -71,12 +71,12 @@ window.bloomValidate = {
 
 $(function () {
 
-    // ── Theme toggle ──────────────────────────────────────────
+    // Theme toggle
     $('#themeToggle').on('click', function () {
         applyTheme(document.querySelector('html').getAttribute('data-theme') === 'light' ? 'dark' : 'light');
     });
 
-    // ── Navbar scroll state ───────────────────────────────────
+    // Navbar scroll state
     const $navbar      = $('#navbar');
     const $toggler     = $('.navbar-toggler');
     const $navCollapse = $('#navLinks');
@@ -85,7 +85,7 @@ $(function () {
         $navbar.toggleClass('scrolled', $(window).scrollTop() > 10);
     });
 
-    // ── Active nav link ───────────────────────────────────────
+    // Active nav link
     const path = location.pathname.replace(/\/$/, '') || '/';
     $('.nav-link').each(function () {
         const href = $(this).attr('href');
@@ -94,7 +94,7 @@ $(function () {
         if (hrefPath === path) $(this).addClass('active');
     });
 
-    // ── Navbar mobile collapse sync ───────────────────────────
+    // Navbar mobile collapse sync
     $toggler.on('click', function () {
         setTimeout(function () {
             $toggler.attr('aria-expanded', String($navCollapse.hasClass('show')));
@@ -111,7 +111,7 @@ $(function () {
         }
     });
 
-    // ── Animated counter ──────────────────────────────────────
+    // Animated counter
     function animateCounter(el, target) {
         const step  = target / (1200 / 16);
         let   cur   = 0;
@@ -134,7 +134,7 @@ $(function () {
         }
     });
 
-    // ── Weather widget ────────────────────────────────────────
+    // Weather widget
     function wi(name) {
         return '<img src="' + assetBase + 'icons/' + name + '.png" class="weather-icon-img" alt="' + name + '" />';
     }

@@ -1,4 +1,4 @@
-// Impact page logic. Requires jQuery 3.6+.
+// Impact page JS
 
 $(function () {
 
@@ -75,7 +75,7 @@ $(function () {
 
     // Flip Cards
     const co2     = Math.round((totalTrees * 22) / 1000);              // tonnes (22kg per tree per year)
-    const sqm = Math.round((totalTrees / 1600) * 10000);  // hectares → square metres
+    const sqm = Math.round((totalTrees / 1600) * 10000);               // hectares → square metres
     const people  = (totalTrees * 2).toLocaleString();                 // 1 tree = oxygen for 2 people/year
 
     $('#flipCo2').text(co2.toLocaleString());

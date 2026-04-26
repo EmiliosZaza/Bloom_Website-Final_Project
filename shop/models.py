@@ -1,6 +1,4 @@
-"""
-Shop models — CartItem, Order, OrderItem
-"""
+#Shop models - CartItem, Order, OrderItem
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -8,7 +6,7 @@ from catalogue.models import Product
 
 
 class CartItem(models.Model):
-    """A product in a user's active cart — deleted with user"""
+    #A product in a user's active cart
     user       = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cart_items')
     product    = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity   = models.PositiveIntegerField(default=1)
@@ -26,7 +24,7 @@ class CartItem(models.Model):
 
 
 class Order(models.Model):
-    """A completed simulated purchase — kept when user is deleted"""
+    #A completed simulated purchase
     STATUS_CHOICES = [
         ('pending',   'Pending'),
         ('confirmed', 'Confirmed'),
@@ -47,7 +45,7 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    """A single product line within an Order"""
+    #A single product line within an Order
     order      = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     product    = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     quantity   = models.PositiveIntegerField()

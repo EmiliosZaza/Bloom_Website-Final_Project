@@ -1,6 +1,5 @@
-"""
-Admin panel URLs — staff only
-"""
+#Admin panel URLs — staff only
+
 from django.urls import path
 from . import views
 

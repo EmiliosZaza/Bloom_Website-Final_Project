@@ -1,6 +1,5 @@
-"""
-Catalogue models — Category, Subcategory, Product, Review, WishlistItem
-"""
+#Catalogue - Category, Subcategory, Product, Review, WishlistItem
+
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -8,7 +7,7 @@ from django.utils.text import slugify
 
 
 class Category(models.Model):
-    """Top-level product category e.g. Clothing, Accessories"""
+    #Top-level product category e.g. Clothing, Accessories
     name        = models.CharField(max_length=80)
     slug        = models.SlugField(unique=True)
     description = models.TextField(blank=True)
@@ -28,7 +27,7 @@ class Category(models.Model):
 
 
 class Subcategory(models.Model):
-    """Second-level category e.g. T-Shirts under Clothing"""
+    #Second-level category e.g. T-Shirts under Clothing
     category    = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories')
     name        = models.CharField(max_length=80)
     slug        = models.SlugField(unique=True)
@@ -47,7 +46,7 @@ class Subcategory(models.Model):
 
 
 class Product(models.Model):
-    """A single sellable product in the Bloom shop"""
+    #A single sellable product in the Bloom shop
     name          = models.CharField(max_length=120)
     slug          = models.SlugField(unique=True)
     description   = models.TextField(max_length=1000)
@@ -71,7 +70,7 @@ class Product(models.Model):
 
     @property
     def avg_rating(self):
-        """Return average star rating or None if no reviews"""
+        #Return average star rating or None if no reviews``
         reviews = self.reviews.all()
         if not reviews:
             return None
@@ -82,7 +81,7 @@ class Product(models.Model):
 
 
 class Review(models.Model):
-    """Star rating and optional text review — logged-in users only"""
+    #Star rating and optional text review for logged-in users only
     STARS = [(i, str(i)) for i in range(1, 6)]
 
     product    = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
@@ -101,7 +100,7 @@ class Review(models.Model):
 
 
 class WishlistItem(models.Model):
-    """Saved product for a logged-in user"""
+    #Saved product for a logged-in user
     user       = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wishlist')
     product    = models.ForeignKey(Product, on_delete=models.CASCADE)
     added_at   = models.DateTimeField(auto_now_add=True)

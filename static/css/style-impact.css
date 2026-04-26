@@ -18,7 +18,7 @@
 .before-after-sub,
 .flip-sub { color: var(--text2); font-size: .95rem; max-width: 560px; margin: 0; }
 
-/* MILESTONE TRACKER */
+/* Milestone Tracker */
 .milestone-section { margin-bottom: 72px; }
 
 .milestone-track-wrap { position: relative; padding-top: 28px; }
@@ -129,7 +129,7 @@
     font-weight: 500;
 }
 
-/* BEFORE and AFTER SLIDER */
+/* Before and After Slider */
 .before-after-section { margin-bottom: 72px; }
 
 .ba-wrap { display: flex; flex-direction: column; gap: 16px; }

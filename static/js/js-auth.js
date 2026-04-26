@@ -1,12 +1,11 @@
-// Auth modal — login / register tab switching and validation
-// Requires jQuery 3.6+
+// Authenticate modal - login / register tab switching and validation
 
 $(function () {
 
     const $backdrop = $('#authBackdrop');
     const $modal    = $('#authModal');
 
-    // ── Open modal ────────────────────────────────────────────
+    // Open modal 
     function openAuth(tab) {
         $backdrop.addClass('visible');
         $modal.addClass('visible');
@@ -15,14 +14,14 @@ $(function () {
         setTimeout(() => $modal.find('.auth-panel.active input:first').focus(), 100);
     }
 
-    // ── Close modal ───────────────────────────────────────────
+    // Close modal 
     function closeAuth() {
         $backdrop.removeClass('visible');
         $modal.removeClass('visible');
         $('body').css('overflow', '');
     }
 
-    // ── Switch tabs ───────────────────────────────────────────
+    // Switch tabs 
     function switchTab(tab) {
         if (tab === 'login') {
             $('#tabLogin').addClass('active').attr('aria-selected', 'true');
@@ -53,7 +52,7 @@ $(function () {
 
     $(document).on('requireAuth', function (e, tab) { openAuth(tab || 'login'); });
 
-    // ── Demo credential cards ─────────────────────────────────
+    // Demo credential cards
     $(document).on('click', '.demo-credential-card', function () {
         $('#loginUsername').val($(this).data('username'));
         $('#loginPassword').val($(this).data('password'));
@@ -62,7 +61,7 @@ $(function () {
         $('#loginUsername').focus();
     });
 
-    // ── Login validation ──────────────────────────────────────
+    // Login validation 
     $('#loginForm').on('submit', function (e) {
         let ok = true;
 
@@ -85,7 +84,7 @@ $(function () {
         if (!ok) e.preventDefault();
     });
 
-    // ── Register validation ───────────────────────────────────
+    // Register validation 
     $('#registerForm').on('submit', function (e) {
         let ok = true;
 
@@ -117,7 +116,7 @@ $(function () {
         if (!ok) e.preventDefault();
     });
 
-    // ── Live sanitisation ─────────────────────────────────────
+    // Live sanitisation 
     $('#regFirstName').on('input', function () {
         $(this).val(bloomValidate.sanitizeName($(this).val()));
     });
@@ -126,7 +125,7 @@ $(function () {
         clearError('#login' + ($(this).attr('id') === 'loginUsername' ? 'UsernameError' : 'PasswordError'));
     });
 
-    // ── Helpers ───────────────────────────────────────────────
+    // Helpers 
     function showError(errorId, message) {
         $(errorId).text(message).addClass('visible');
     }

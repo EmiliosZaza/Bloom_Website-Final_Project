@@ -1,4 +1,4 @@
-// Contact page logic. Requires jQuery 3.6+.
+// Contact page JS
 
 $(function () {
 
@@ -53,7 +53,7 @@ $(function () {
         return ok ? { name, email, subject, message } : null;
     }
 
-    // ── Live sanitisation and error clearing ──────────────────
+    // Live sanitisation and error clearing
     $nameInput.on('input', function () {
         $(this).val(bloomValidate.sanitizeName($(this).val()));
         if (bloomValidate.isValidName($(this).val())) {
@@ -83,7 +83,7 @@ $(function () {
         }
     });
 
-    // ── Modal ─────────────────────────────────────────────────
+    // Modal
     function openModal(data) {
         const rows = [
             ['Name',    data.name],

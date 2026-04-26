@@ -1,4 +1,4 @@
-// About page logic. Requires jQuery 3.6+.
+// About page JS
 
 $(function () {
 
