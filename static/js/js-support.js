@@ -4,7 +4,8 @@ $(function () {
 
     const bloomDataEl      = document.querySelector('[data-trees-dollar]');
     const TREES_PER_DOLLAR = bloomDataEl ? parseInt(bloomDataEl.dataset.treesDollar, 10) : 5;
-    const csrfToken        = $('[name=csrfmiddlewaretoken]').val();
+    // Read CSRF token from cookie — reliable in both dev and production
+    const csrfToken = document.cookie.split(';').map(c => c.trim()).find(c => c.startsWith('csrftoken='))?.split('=')[1] || $('[name=csrfmiddlewaretoken]').val();
 
     // Product Quick View Modal
     let activeProductId = null;
